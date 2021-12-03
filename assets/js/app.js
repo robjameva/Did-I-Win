@@ -1,8 +1,8 @@
 var team = "NYJ"
 var week = 1;
 
-var AFCNum = 5;
-var NFCNum = 5;
+var homeNum = 9;
+var awayNum = 4;
 var qt1Payout = 100;
 var qt2Payout = 150;
 var qt3Payout = 100;
@@ -21,7 +21,7 @@ var awayScores = {
     q2: null,
     q3: null,
     q4: null,
-    overtime: null,
+    overtime: null
 }
 
 var teamsArray = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC", "LAC",
@@ -48,10 +48,11 @@ var getTeamData = function(team) {
                             console.log(data[i]);
                             getOpponentData(i, data[i].GameKey);
                             getSelectedTeamScore(data[i])
+                            didIWin();
                         }
                     }
-                    console.log(awayScores)
-                    console.log(homeScores)
+                    // console.log(awayScores)
+                    // console.log(homeScores)
                 });
             }
             else {
@@ -89,19 +90,48 @@ var getOpponentData = function(index, gameKey) {
 var getSelectedTeamScore = function(data) {
 
     if (data.HomeOrAway === "HOME") {
-        homeScores.q1 = parsedData.ScoreQuarter1;
-        homeScores.q2 = parsedData.ScoreQuarter2;
-        homeScores.q3 = parsedData.ScoreQuarter3;
-        homeScores.q4 = parsedData.ScoreQuarter4;
+        homeScores.q1 = data.ScoreQuarter1;
+        homeScores.q2 = data.ScoreQuarter2;
+        homeScores.q3 = data.ScoreQuarter3;
+        homeScores.q4 = data.ScoreQuarter4;
     } else {
-        awayScores.q1 = parsedData.ScoreQuarter1;
-        awayScores.q2 = parsedData.ScoreQuarter2;
-        awayScores.q3 = parsedData.ScoreQuarter3;
-        awayScores.q4 = parsedData.ScoreQuarter4;
+        awayScores.q1 = data.ScoreQuarter1;
+        awayScores.q2 = data.ScoreQuarter2;
+        awayScores.q3 = data.ScoreQuarter3;
+        awayScores.q4 = data.ScoreQuarter4;
     }
 }
 
+var didIWin = function() {
+    // Get total score per quarter and only look at the last didgit
+    var homeFirstQuarter = homeScores.q1 % 10;
+    var homeSecondQuarter = (homeScores.q1 + homeScores.q2) % 10;
+    var homeThirdQuarter = (homeScores.q1 + homeScores.q2 + homeScores.q3) % 10;
+    var homeFourthQuarter = (homeScores.q1 + homeScores.q2 + homeScores.q3 + homeScores.q4) % 10;
 
+    var awayFirstQuarter = awayScores.q1 % 10;
+    var awaySecondQuarter = (awayScores.q1 + awayScores.q2) % 10;
+    var awayThirdQuarter = (awayScores.q1 + awayScores.q2 + awayScores.q3) % 10;
+    var awayFourthQuarter = (awayScores.q1 + awayScores.q2 + awayScores.q3 + awayScores.q4) % 10;
+
+    console.log(homeFirstQuarter, homeSecondQuarter, homeThirdQuarter, homeFourthQuarter)
+    console.log(awayFirstQuarter, awaySecondQuarter, awayThirdQuarter, awayFourthQuarter)
+
+    if (homeNum === homeFirstQuarter && awayNum === awayFirstQuarter) {
+        console.log("You Won $" + qt1Payout)
+    }
+
+    if (homeNum === homeSecondQuarter && awayNum === awaySecondQuarter) {
+        console.log("You Won $" + qt2Payout)
+    }
+    if (homeNum === homeThirdQuarter && awayNum === awayThirdQuarter) {
+        console.log("You Won $" + qt3Payout)
+    }
+    if (homeNum === homeFourthQuarter && awayNum === awayFourthQuarter) {
+        console.log("You Won $" + qt4Payout)
+    }
+
+}
 
 
 
