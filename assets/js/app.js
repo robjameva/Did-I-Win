@@ -2,7 +2,9 @@ var gameWeekDropDownEl = document.getElementById("btn-list")
 var gameWeekTitleEL = document.getElementById("dropdownMenuButton1")
 var gameWeekEl = document.querySelector(".week-btn")
 
-
+var teamDropDownEl = document.getElementById("team-list")
+var teamTitleEL = document.getElementById("dropdownMenuButton2")
+var teamEl = document.querySelector(".team-btn")
 
 
 
@@ -181,5 +183,10 @@ gameWeekDropDownEl.addEventListener("click", function(event) {
     var btn = event.target;
     gameWeekTitleEL.textContent = btn.textContent;
     console.log(btn)
+})
 
+teamDropDownEl.addEventListener("click", function(event) {
+    var btn = event.target;
+    teamTitleEL.textContent = btn.textContent;
+    console.log(btn)
 })
