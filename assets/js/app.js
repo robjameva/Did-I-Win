@@ -1,3 +1,12 @@
+var gameWeekDropDownEl = document.getElementById("btn-list")
+var gameWeekTitleEL = document.getElementById("dropdownMenuButton1")
+var gameWeekEl = document.querySelector(".week-btn")
+
+
+
+
+
+
 var team = "NYJ"
 var week = 1;
 
@@ -163,5 +172,14 @@ var getGif = function() {
         })
 }
 
-getTeamData(team);
+//getTeamData(team);
 //getGif();
+
+
+
+gameWeekDropDownEl.addEventListener("click", function(event) {
+    var btn = event.target;
+    gameWeekTitleEL.textContent = btn.textContent;
+    console.log(btn)
+
+})
