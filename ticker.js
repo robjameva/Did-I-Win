@@ -595,4 +595,4 @@ const data = [
         content.classList.add("vitem")
         content.textContent = `Stadium Name: ${data[i].Name}  Location: ${data[i].City}, ${data[i].State}   Capacity: ${data[i].Capacity}  Surface: ${data[i].PlayingSurface} `
         tickerEl.appendChild(content)
-    }
+    };

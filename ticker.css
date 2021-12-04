@@ -67,7 +67,7 @@
   }
   .vmove {
     animation-name: tickerv;
-    animation-duration: 35s;
+    animation-duration: 40s;
     animation-iteration-count: infinite;
     animation-timing-function: cubic-bezier(1, 0, .5, 0);
   }
