@@ -15,11 +15,11 @@ var awayScoreTitleEL = document.getElementById("away-score-dropdown")
 var awayScoreEl = document.querySelector(".away-score-btn")
 
 
-var team = "NYJ"
-var week = 1;
+var team = null;
+var week = null;
 
-var homeNum = 9;
-var awayNum = 4;
+var homeNum = 3;
+var awayNum = 8;
 var qt1Payout = 100;
 var qt2Payout = 150;
 var qt3Payout = 100;
@@ -55,24 +55,21 @@ var getTeamData = function(team) {
     var season = "2021";
     let apiUrl = `https://api.sportsdata.io/v3/nfl/scores/json/TeamGameStats/${season}/${week}?key=${key}`
 
-    //localStorage.clear();
     fetch(apiUrl)
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
                     for (var i = 0; i < data.length; i++) {
-                        localStorage.setItem("ID" + i, JSON.stringify(data[i]));
+                        sessionStorage.setItem("ID" + i, JSON.stringify(data[i]));
                         if (data[i].Team === team) {
-                            console.log("Selected Team " + data[i].Team);
-                            console.log(data[i]);
-                            getOpponentData(i, data[i].GameKey);
-                            getSelectedTeamScore(data[i])
-                            renderScoreBtns(homeScores.team, awayScores.team)
-                            didIWin();
+                            localStorage.setItem("GameKey", data[i].GameKey)
                         }
                     }
-                    // console.log(awayScores)
-                    // console.log(homeScores)
+                    setLocalStorage();
+                    setTeamData();
+                    checkDropdownChildren();
+                    renderScoreBtns();
+                    didIWin();
                 });
             }
             else {
@@ -81,49 +78,38 @@ var getTeamData = function(team) {
         })
 }
 
-var getOpponentData = function(index, gameKey) {
-    data = JSON.parse(localStorage.getItem("ID" + index));
-    var opp = data.Opponent
 
-    // Finds Team Data for the opponent in local storage
-    for (var i = 0; i < localStorage.length; i++) {
-        parsedData = JSON.parse(localStorage.getItem("ID" + i));
-        // Check for the oppent team and select the matching game by gamekey to avoid dupilicates if a team plays another team more than once
-        if (parsedData.Team === opp && data.GameKey === gameKey) {
-            console.log("Opponent " + opp);
-            console.log(parsedData);
-            if (parsedData.HomeOrAway === "HOME") {
-                homeScores.team = parsedData.TeamName;
-                homeScores.q1 = parsedData.ScoreQuarter1;
-                homeScores.q2 = parsedData.ScoreQuarter2;
-                homeScores.q3 = parsedData.ScoreQuarter3;
-                homeScores.q4 = parsedData.ScoreQuarter4;
-            } else {
-                awayScores.team = parsedData.TeamName;
-                awayScores.q1 = parsedData.ScoreQuarter1;
-                awayScores.q2 = parsedData.ScoreQuarter2;
-                awayScores.q3 = parsedData.ScoreQuarter3;
-                awayScores.q4 = parsedData.ScoreQuarter4;
-            }
+
+
+// Sets local storage to save only the game objects for the selected team and their opponent
+var setLocalStorage = function() {
+    var gameKey = localStorage.getItem("GameKey");
+    for (var i = 0; i < sessionStorage.length; i++) {
+        data = JSON.parse(sessionStorage.getItem("ID" + i));
+        if (data.GameKey == gameKey) {
+            localStorage.setItem(data.HomeOrAway, JSON.stringify(data));
         }
+
     }
 }
 
-var getSelectedTeamScore = function(data) {
+var setTeamData = function() {
+    var homeTeamData = localStorage.getItem("HOME");
+    var awayTeamData = localStorage.getItem("AWAY");
+    var homeTeamParsed = JSON.parse(homeTeamData);
+    var awayTeamParsed = JSON.parse(awayTeamData);
 
-    if (data.HomeOrAway === "HOME") {
-        homeScores.team = data.TeamName;
-        homeScores.q1 = data.ScoreQuarter1;
-        homeScores.q2 = data.ScoreQuarter2;
-        homeScores.q3 = data.ScoreQuarter3;
-        homeScores.q4 = data.ScoreQuarter4;
-    } else {
-        awayScores.team = data.TeamName;
-        awayScores.q1 = data.ScoreQuarter1;
-        awayScores.q2 = data.ScoreQuarter2;
-        awayScores.q3 = data.ScoreQuarter3;
-        awayScores.q4 = data.ScoreQuarter4;
-    }
+    homeScores.team = homeTeamParsed.TeamName;
+    homeScores.q1 = homeTeamParsed.ScoreQuarter1;
+    homeScores.q2 = homeTeamParsed.ScoreQuarter2;
+    homeScores.q3 = homeTeamParsed.ScoreQuarter3;
+    homeScores.q4 = homeTeamParsed.ScoreQuarter4;
+
+    awayScores.team = awayTeamParsed.TeamName;
+    awayScores.q1 = awayTeamParsed.ScoreQuarter1;
+    awayScores.q2 = awayTeamParsed.ScoreQuarter2;
+    awayScores.q3 = awayTeamParsed.ScoreQuarter3;
+    awayScores.q4 = awayTeamParsed.ScoreQuarter4;
 }
 
 var didIWin = function() {
@@ -163,6 +149,7 @@ var createScoreBtns = function(num, homeOrAway, team) {
     scoreBtn.className = homeOrAway + "-score-btn";
     scoreBtn.textContent = team + " " + num;
     scoreLi.appendChild(scoreBtn);
+
     if (homeOrAway === "home") {
         homeScoreDropDownEl.appendChild(scoreLi);
         homeScoreTitleEL.textContent = homeScores.team;
@@ -173,10 +160,17 @@ var createScoreBtns = function(num, homeOrAway, team) {
     }
 }
 
-var renderScoreBtns = function(homeTeam, awayTeam) {
+var checkDropdownChildren = function() {
+    if (homeScoreDropDownEl.hasChildNodes && awayScoreDropDownEl.hasChildNodes) {
+        homeScoreDropDownEl.innerHTML = "";
+        awayScoreDropDownEl.innerHTML = "";
+    }
+}
+
+var renderScoreBtns = function() {
     for (var i = 0; i < 10; i++) {
-        createScoreBtns(i, "home", homeTeam);
-        createScoreBtns(i, "away", awayTeam);
+        createScoreBtns(i, "home", homeScores.team);
+        createScoreBtns(i, "away", awayScores.team);
     }
 }
 
@@ -209,7 +203,7 @@ var getGif = function() {
         })
 }
 
-getTeamData(team);
+
 //getGif();
 
 
@@ -217,13 +211,17 @@ getTeamData(team);
 gameWeekDropDownEl.addEventListener("click", function(event) {
     var btn = event.target;
     gameWeekTitleEL.textContent = btn.textContent;
-    console.log(btn)
+    week = btn.getAttribute("data-week-num")
+    if (team != null) {
+        getTeamData(team);
+    }
 })
 
 teamDropDownEl.addEventListener("click", function(event) {
     var btn = event.target;
     teamTitleEL.textContent = btn.textContent;
-    console.log(btn)
+    team = btn.getAttribute("data-team")
+    getTeamData(team);
 })
 
 homeScoreDropDownEl.addEventListener("click", function(event) {
