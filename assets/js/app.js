@@ -1,12 +1,18 @@
-var gameWeekDropDownEl = document.getElementById("btn-list")
-var gameWeekTitleEL = document.getElementById("dropdownMenuButton1")
+var gameWeekDropDownEl = document.getElementById("week-btn-list")
+var gameWeekTitleEL = document.getElementById("week-dropdown")
 var gameWeekEl = document.querySelector(".week-btn")
 
-var teamDropDownEl = document.getElementById("team-list")
-var teamTitleEL = document.getElementById("dropdownMenuButton2")
+var teamDropDownEl = document.getElementById("team-btn-list")
+var teamTitleEL = document.getElementById("team-dropdown")
 var teamEl = document.querySelector(".team-btn")
 
+var homeScoreDropDownEl = document.getElementById("home-score-btn-list")
+var homeScoreTitleEL = document.getElementById("home-score-dropdown")
+var homeScoreEl = document.querySelector(".home-score-btn")
 
+var awayScoreDropDownEl = document.getElementById("away-score-btn-list")
+var awayScoreTitleEL = document.getElementById("away-score-dropdown")
+var awayScoreEl = document.querySelector(".away-score-btn")
 
 
 var team = "NYJ"
@@ -190,3 +196,17 @@ teamDropDownEl.addEventListener("click", function(event) {
     teamTitleEL.textContent = btn.textContent;
     console.log(btn)
 })
+
+homeScoreDropDownEl.addEventListener("click", function(event) {
+    var btn = event.target;
+    homeScoreTitleEL.textContent = btn.textContent;
+    console.log(btn)
+})
+
+awayScoreDropDownEl.addEventListener("click", function(event) {
+    var btn = event.target;
+    awayScoreTitleEL.textContent = btn.textContent;
+    console.log(btn)
+})
+
+

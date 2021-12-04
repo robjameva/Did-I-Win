@@ -11,7 +11,10 @@ align-content: center;
 }
 
 
-.week-btn, .team-btn {
+.week-btn, 
+.team-btn, 
+.home-score-btn,
+.away-score-btn {
   background: none;
 	color: inherit;
 	border: none;

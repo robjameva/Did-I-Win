@@ -18,10 +18,10 @@
   </div>
 
   <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="week-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
       Game Week
     </button>
-    <ul id="btn-list" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <ul id="week-btn-list" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
       <li><button class="week-btn">Week 1</button></li>
       <li><button class="week-btn">Week 2</button></li>
       <li><button class="week-btn">Week 3</button></li>
@@ -47,10 +47,10 @@
   </div>
 
   <div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="team-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
       Choose your team
     </button>
-    <ul id="team-list" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <ul id="team-btn-list" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
       <li><button class="team-btn">San Francisco 49ers</button></li>
       <li><button class="team-btn">Green Bay Packers</button></li>
       <li><button class="team-btn">New York Giants</button></li>
@@ -96,56 +96,40 @@
 
   <div class="container">
     <div class="row">
-      <textarea class="col-3">
-        Q-1
-      </textarea>
-      <textarea class="col-3">
-        Q-2
-      </textarea>
-      <textarea class="col-3">
-        Q-3
-      </textarea>
-      <textarea class="col-3">
-        Q-4
-      </textarea>
+        <label for="quarter-1-text"> First Quarter Payout</label>
+        <input id="quarter-1-txt" name="quarter-1-txt" class="col-3 " placeholder="$" type="number"></input>
+        <label for="quarter-1-text"> Second Quarter Payout</label>
+        <input id="quarter-2-txt" name="quarter-2-txt" class="col-3" placeholder="$" type="number"></input>
+        <label for="quarter-1-text"> Third Quarter Payout</label>
+        <input id="quarter-3-txt" name="quarter-3-txt" class="col-3" placeholder="$" type="number"></input>
+        <label for="quarter-1-text"> Final Score Payout</label>
+        <input id="quarter-4-txt" name="quarter-4-txt" class="col-3" placeholder="$" type="number"></input>
     </div>
   </div>
 
   <div class="container">
     <div class="row">
       <div class="btn-group col-6">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          Home team
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="home-score-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          Home Team Score
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">Home Team 1</a></li>
-          <li><a class="dropdown-item" href="#">Home Team 2</a></li>
-          <li><a class="dropdown-item" href="#">Home Team 3</a></li>
-          <li><a class="dropdown-item" href="#">Home Team 4</a></li>
-          <li><a class="dropdown-item" href="#">Home Team 5</a></li>
-          <li><a class="dropdown-item" href="#">Home Team 6</a></li>
-          <li><a class="dropdown-item" href="#">Home Team 7</a></li>
-          <li><a class="dropdown-item" href="#">Home Team 8</a></li>
-          <li><a class="dropdown-item" href="#">Home Team 9</a></li>
-          <li><a class="dropdown-item" href="#">Home Team 0</a></li>        
+        <ul id="home-score-btn-list" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><button class="home-score-btn">0</button></li>   
+          <li><button class="home-score-btn">1</button></li>   
+          <li><button class="home-score-btn">2</button></li>   
+          <li><button class="home-score-btn">3</button></li>   
         </ul>
       </div>
     
       <div class="btn-group col-6">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="away-score-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
           Away team
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">Away Team 1</a></li>
-          <li><a class="dropdown-item" href="#">Away Team 2</a></li>
-          <li><a class="dropdown-item" href="#">Away Team 3</a></li>
-          <li><a class="dropdown-item" href="#">Away Team 4</a></li>
-          <li><a class="dropdown-item" href="#">Away Team 5</a></li>
-          <li><a class="dropdown-item" href="#">Away Team 6</a></li>
-          <li><a class="dropdown-item" href="#">Away Team 7</a></li>
-          <li><a class="dropdown-item" href="#">Away Team 8</a></li>
-          <li><a class="dropdown-item" href="#">Away Team 9</a></li>
-          <li><a class="dropdown-item" href="#">Away Team 0</a></li> 
+        <ul id="away-score-btn-list" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><button class="away-score-btn">0</button></li>   
+            <li><button class="away-score-btn">1</button></li>   
+            <li><button class="away-score-btn">2</button></li>   
+            <li><button class="away-score-btn">3</button></li> 
         
         </ul>
       </div>      
