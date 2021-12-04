@@ -15,6 +15,13 @@ var awayScoreDropDownEl = document.getElementById("away-score-btn-list")
 var awayScoreTitleEL = document.getElementById("away-score-dropdown")
 var awayScoreEl = document.querySelector(".away-score-btn")
 
+var addToPoolBtnEL = document.getElementById("add-to-pool")
+var watchListEL = document.getElementById("user-num-table")
+var quarter1PayoutEL = document.getElementById("quarter-1-txt")
+var quarter2PayoutEL = document.getElementById("quarter-2-txt")
+var quarter3PayoutEL = document.getElementById("quarter-3-txt")
+var quarter4PayoutEL = document.getElementById("quarter-4-txt")
+
 // Global Variables
 var team = null;
 var week = null;
@@ -78,9 +85,6 @@ var getTeamData = function(team) {
         })
 }
 
-
-
-
 // Sets local storage to save only the game objects for the selected team and their opponent by looking for the Game Key saved in the inital API call
 var setLocalStorage = function() {
     var gameKey = localStorage.getItem("GameKey");
@@ -118,7 +122,7 @@ var createScoreBtns = function(num, homeOrAway, team) {
     var scoreLi = document.createElement("li");
     var scoreBtn = document.createElement("button");
     scoreBtn.className = homeOrAway + "-score-btn";
-    scoreBtn.textContent = team + " " + num;
+    scoreBtn.textContent = team + ": " + num;
     scoreLi.appendChild(scoreBtn);
 
     if (homeOrAway === "home") {
@@ -237,4 +241,26 @@ awayScoreDropDownEl.addEventListener("click", function(event) {
     console.log(btn)
 })
 
+addToPoolBtnEL.addEventListener("click", function() {
+    var tableRowEl = document.createElement("tr");
+    var tableDataTeamsEl = document.createElement("td");
+    var tableDataQ1El = document.createElement("td");
+    var tableDataQ2El = document.createElement("td");
+    var tableDataQ3El = document.createElement("td");
+    var tableDataQ4El = document.createElement("td");
+
+    tableDataTeamsEl.innerHTML = homeScoreTitleEL.textContent + "<br>" + awayScoreTitleEL.textContent;
+    tableDataQ1El.innerHTML = "$" + quarter1PayoutEL.value;
+    tableDataQ2El.innerHTML = "$" + quarter2PayoutEL.value;
+    tableDataQ3El.innerHTML = "$" + quarter3PayoutEL.value;
+    tableDataQ4El.innerHTML = "$" + quarter4PayoutEL.value;
+
+    tableRowEl.appendChild(tableDataTeamsEl);
+    tableRowEl.appendChild(tableDataQ1El);
+    tableRowEl.appendChild(tableDataQ2El);
+    tableRowEl.appendChild(tableDataQ3El);
+    tableRowEl.appendChild(tableDataQ4El);
+
+    watchListEL.appendChild(tableRowEl);
+})
 

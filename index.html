@@ -98,11 +98,11 @@
     <div class="row">
         <label for="quarter-1-text"> First Quarter Payout</label>
         <input id="quarter-1-txt" name="quarter-1-txt" class="col-3 " placeholder="$" type="number"></input>
-        <label for="quarter-1-text"> Second Quarter Payout</label>
+        <label for="quarter-2-text"> Second Quarter Payout</label>
         <input id="quarter-2-txt" name="quarter-2-txt" class="col-3" placeholder="$" type="number"></input>
-        <label for="quarter-1-text"> Third Quarter Payout</label>
+        <label for="quarter-3-text"> Third Quarter Payout</label>
         <input id="quarter-3-txt" name="quarter-3-txt" class="col-3" placeholder="$" type="number"></input>
-        <label for="quarter-1-text"> Final Score Payout</label>
+        <label for="quarter-4-text"> Final Score Payout</label>
         <input id="quarter-4-txt" name="quarter-4-txt" class="col-3" placeholder="$" type="number"></input>
     </div>
   </div>
@@ -131,18 +131,21 @@
   </div>
 
 <div>
-  <button class="btn btn-secondary " type="button">
+  <button class="btn btn-secondary " type="button" id="add-to-pool">
     Add to Pool
   </button>
 </div>
 
   <div class="row">
     <div class="col"></div>
-    <div class="col">1st Quarter</div>
-    <div class="col">2nd Quarter</div>
-    <div class="col">3rd Quarter</div>
-    <div class="col">Final</div>
-    
+    <table id="user-num-table" class="col">
+        <tr>
+            <th>Numbers</th>
+            <th>1st Quarter</th>
+            <th>2nd Quarter</th>
+            <th>3rd Quarter</th>
+            <th>Final Score</th>
+        </tr> 
   </div>
 <div>
   <button class="btn btn-secondary " type="button">
