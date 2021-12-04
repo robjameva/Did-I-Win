@@ -26,6 +26,7 @@ var qt3Payout = 100;
 var qt4Payout = 300;
 
 var homeScores = {
+    team: null,
     q1: null,
     q2: null,
     q3: null,
@@ -34,6 +35,7 @@ var homeScores = {
 }
 
 var awayScores = {
+    team: null,
     q1: null,
     q2: null,
     q3: null,
@@ -65,6 +67,7 @@ var getTeamData = function(team) {
                             console.log(data[i]);
                             getOpponentData(i, data[i].GameKey);
                             getSelectedTeamScore(data[i])
+                            renderScoreBtns(homeScores.team, awayScores.team)
                             didIWin();
                         }
                     }
@@ -90,11 +93,13 @@ var getOpponentData = function(index, gameKey) {
             console.log("Opponent " + opp);
             console.log(parsedData);
             if (parsedData.HomeOrAway === "HOME") {
+                homeScores.team = parsedData.TeamName;
                 homeScores.q1 = parsedData.ScoreQuarter1;
                 homeScores.q2 = parsedData.ScoreQuarter2;
                 homeScores.q3 = parsedData.ScoreQuarter3;
                 homeScores.q4 = parsedData.ScoreQuarter4;
             } else {
+                awayScores.team = parsedData.TeamName;
                 awayScores.q1 = parsedData.ScoreQuarter1;
                 awayScores.q2 = parsedData.ScoreQuarter2;
                 awayScores.q3 = parsedData.ScoreQuarter3;
@@ -107,11 +112,13 @@ var getOpponentData = function(index, gameKey) {
 var getSelectedTeamScore = function(data) {
 
     if (data.HomeOrAway === "HOME") {
+        homeScores.team = data.TeamName;
         homeScores.q1 = data.ScoreQuarter1;
         homeScores.q2 = data.ScoreQuarter2;
         homeScores.q3 = data.ScoreQuarter3;
         homeScores.q4 = data.ScoreQuarter4;
     } else {
+        awayScores.team = data.TeamName;
         awayScores.q1 = data.ScoreQuarter1;
         awayScores.q2 = data.ScoreQuarter2;
         awayScores.q3 = data.ScoreQuarter3;
@@ -150,24 +157,30 @@ var didIWin = function() {
 
 }
 
-var createScoreBtns = function(num, team) {
+var createScoreBtns = function(num, homeOrAway, team) {
     var scoreLi = document.createElement("li");
     var scoreBtn = document.createElement("button");
-    scoreBtn.className = team + "-score-btn";
-    scoreBtn.textContent = num;
+    scoreBtn.className = homeOrAway + "-score-btn";
+    scoreBtn.textContent = team + " " + num;
     scoreLi.appendChild(scoreBtn);
-    if (team === "home") {
+    if (homeOrAway === "home") {
         homeScoreDropDownEl.appendChild(scoreLi);
+        homeScoreTitleEL.textContent = homeScores.team;
     }
     else {
-        awayScoreDropDownEl.appendChild(scoreLi)
+        awayScoreDropDownEl.appendChild(scoreLi);
+        awayScoreTitleEL.textContent = awayScores.team;
     }
 }
 
-for (var i = 0; i < 10; i++) {
-    createScoreBtns(i, "home");
-    createScoreBtns(i, "away");
+var renderScoreBtns = function(homeTeam, awayTeam) {
+    for (var i = 0; i < 10; i++) {
+        createScoreBtns(i, "home", homeTeam);
+        createScoreBtns(i, "away", awayTeam);
+    }
 }
+
+
 
 
 
@@ -196,7 +209,7 @@ var getGif = function() {
         })
 }
 
-//getTeamData(team);
+getTeamData(team);
 //getGif();
 
 
