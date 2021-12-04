@@ -150,8 +150,24 @@ var didIWin = function() {
 
 }
 
+var createScoreBtns = function(num, team) {
+    var scoreLi = document.createElement("li");
+    var scoreBtn = document.createElement("button");
+    scoreBtn.className = team + "-score-btn";
+    scoreBtn.textContent = num;
+    scoreLi.appendChild(scoreBtn);
+    if (team === "home") {
+        homeScoreDropDownEl.appendChild(scoreLi);
+    }
+    else {
+        awayScoreDropDownEl.appendChild(scoreLi)
+    }
+}
 
-
+for (var i = 0; i < 10; i++) {
+    createScoreBtns(i, "home");
+    createScoreBtns(i, "away");
+}
 
 
 
