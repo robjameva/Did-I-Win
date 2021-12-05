@@ -23,17 +23,13 @@ var quarter3PayoutEL = document.getElementById("quarter-3-txt")
 var quarter4PayoutEL = document.getElementById("quarter-4-txt")
 
 var clearListBtnEL = document.getElementById("clear-btn")
+var checkBoxesBtnEL = document.getElementById("check-boxes")
+
 
 // Global Variables
 var team = null;
 var week = null;
 
-var homeNum = 3;
-var awayNum = 8;
-var qt1Payout = 100;
-var qt2Payout = 150;
-var qt3Payout = 100;
-var qt4Payout = 300;
 var savedItemsID = 0;
 
 var homeScores = {
@@ -79,7 +75,6 @@ var getTeamData = function(team) {
                     setTeamData();
                     checkDropdownChildren();
                     renderScoreBtns();
-                    didIWin();
                 });
             }
             else {
@@ -131,10 +126,12 @@ var createScoreBtns = function(num, homeOrAway, team) {
     if (homeOrAway === "home") {
         homeScoreDropDownEl.appendChild(scoreLi);
         homeScoreTitleEL.textContent = homeScores.team;
+        scoreBtn.setAttribute("data-home-score-", num);
     }
     else {
         awayScoreDropDownEl.appendChild(scoreLi);
         awayScoreTitleEL.textContent = awayScores.team;
+        scoreBtn.setAttribute("data-away-score-", num);
     }
 }
 
@@ -154,40 +151,11 @@ var renderScoreBtns = function() {
     }
 }
 
-// Logic to check if the users numbers match the winning numbers
-var didIWin = function() {
-    // Get total score per quarter and only look at the last didgit
-    var homeFirstQuarter = homeScores.q1 % 10;
-    var homeSecondQuarter = (homeScores.q1 + homeScores.q2) % 10;
-    var homeThirdQuarter = (homeScores.q1 + homeScores.q2 + homeScores.q3) % 10;
-    var homeFourthQuarter = (homeScores.q1 + homeScores.q2 + homeScores.q3 + homeScores.q4) % 10;
-
-    var awayFirstQuarter = awayScores.q1 % 10;
-    var awaySecondQuarter = (awayScores.q1 + awayScores.q2) % 10;
-    var awayThirdQuarter = (awayScores.q1 + awayScores.q2 + awayScores.q3) % 10;
-    var awayFourthQuarter = (awayScores.q1 + awayScores.q2 + awayScores.q3 + awayScores.q4) % 10;
-
-    console.log(homeFirstQuarter, homeSecondQuarter, homeThirdQuarter, homeFourthQuarter)
-    console.log(awayFirstQuarter, awaySecondQuarter, awayThirdQuarter, awayFourthQuarter)
-
-    // Since the same numbers can win multiple quarters we check each quarter against our numbers with individual if statements
-    if (homeNum === homeFirstQuarter && awayNum === awayFirstQuarter) {
-        console.log("You Won $" + qt1Payout)
-    }
-
-    if (homeNum === homeSecondQuarter && awayNum === awaySecondQuarter) {
-        console.log("You Won $" + qt2Payout)
-    }
-    if (homeNum === homeThirdQuarter && awayNum === awayThirdQuarter) {
-        console.log("You Won $" + qt3Payout)
-    }
-    if (homeNum === homeFourthQuarter && awayNum === awayFourthQuarter) {
-        console.log("You Won $" + qt4Payout)
-    }
-
-}
-
 var addToPoolWatchlist = function() {
+    var homeScore = homeScoreTitleEL.getAttribute("data-home-score-")
+    var awayScore = awayScoreTitleEL.getAttribute("data-away-score-")
+    console.log(homeScore, awayScore);
+
     var tableRowEl = document.createElement("tr");
     var tableDataTeamsEl = document.createElement("td");
     var tableDataQ1El = document.createElement("td");
@@ -200,6 +168,19 @@ var addToPoolWatchlist = function() {
     tableDataQ2El.innerHTML = "$" + quarter2PayoutEL.value;
     tableDataQ3El.innerHTML = "$" + quarter3PayoutEL.value;
     tableDataQ4El.innerHTML = "$" + quarter4PayoutEL.value;
+
+    // Set each cell to hold the users numebrs
+    tableDataQ1El.setAttribute("data-home-score", homeScore);
+    tableDataQ1El.setAttribute("data-away-score", awayScore);
+
+    tableDataQ2El.setAttribute("data-home-score", homeScore);
+    tableDataQ2El.setAttribute("data-away-score", awayScore);
+
+    tableDataQ3El.setAttribute("data-home-score", homeScore);
+    tableDataQ3El.setAttribute("data-away-score", awayScore);
+
+    tableDataQ4El.setAttribute("data-home-score", homeScore);
+    tableDataQ4El.setAttribute("data-away-score", awayScore);
 
     tableRowEl.appendChild(tableDataTeamsEl);
     tableRowEl.appendChild(tableDataQ1El);
@@ -214,6 +195,8 @@ var addToPoolWatchlist = function() {
 var saveNumbersToLocalStorage = function() {
     var savedNumbers = {
         homeTeam: homeScoreTitleEL.textContent,
+        homeScore: homeScoreTitleEL.getAttribute("data-home-score-"),
+        awayScore: awayScoreTitleEL.getAttribute("data-away-score-"),
         awayTeam: awayScoreTitleEL.textContent,
         q1: quarter1PayoutEL.value,
         q2: quarter2PayoutEL.value,
@@ -239,6 +222,19 @@ var loadPoolWatchlist = function(data) {
     tableDataQ3El.innerHTML = "$" + data.q3;
     tableDataQ4El.innerHTML = "$" + data.q4;
 
+    // Set each cell to hold the users numebrs
+    tableDataQ1El.setAttribute("data-home-score", data.homeScore);
+    tableDataQ1El.setAttribute("data-away-score", data.awayScore);
+
+    tableDataQ2El.setAttribute("data-home-score", data.homeScore);
+    tableDataQ2El.setAttribute("data-away-score", data.awayScore);
+
+    tableDataQ3El.setAttribute("data-home-score", data.homeScore);
+    tableDataQ3El.setAttribute("data-away-score", data.awayScore);
+
+    tableDataQ4El.setAttribute("data-home-score", data.homeScore);
+    tableDataQ4El.setAttribute("data-away-score", data.awayScore);
+
     tableRowEl.appendChild(tableDataTeamsEl);
     tableRowEl.appendChild(tableDataQ1El);
     tableRowEl.appendChild(tableDataQ2El);
@@ -261,7 +257,58 @@ if (localStorage.getItem(0)) {
     }
 }
 
+// Logic to check if the users numbers match the winning numbers
+var didIWin = function() {
+    // Get total score per quarter and only look at the last didgit
+    var homeFirstQuarter = homeScores.q1 % 10;
+    var homeSecondQuarter = (homeScores.q1 + homeScores.q2) % 10;
+    var homeThirdQuarter = (homeScores.q1 + homeScores.q2 + homeScores.q3) % 10;
+    var homeFourthQuarter = (homeScores.q1 + homeScores.q2 + homeScores.q3 + homeScores.q4) % 10;
 
+    var awayFirstQuarter = awayScores.q1 % 10;
+    var awaySecondQuarter = (awayScores.q1 + awayScores.q2) % 10;
+    var awayThirdQuarter = (awayScores.q1 + awayScores.q2 + awayScores.q3) % 10;
+    var awayFourthQuarter = (awayScores.q1 + awayScores.q2 + awayScores.q3 + awayScores.q4) % 10;
+
+    console.log(homeFirstQuarter, homeSecondQuarter, homeThirdQuarter, homeFourthQuarter)
+    console.log(awayFirstQuarter, awaySecondQuarter, awayThirdQuarter, awayFourthQuarter)
+
+
+    var qt1Payout = 100;
+    var qt2Payout = 150;
+    var qt3Payout = 100;
+    var qt4Payout = 300;
+
+
+
+
+    for (var i = 0, row; row = watchListEL.rows[i]; i++) {
+        for (var j = 0, col; col = row.cells[j]; j++) {
+            var col = row.cells[j]
+            //iterate through columns
+            //columns would be accessed using the "col" variable assigned in the for loop
+            var homeNum = col.getAttribute("data-home-score");
+            var awayNum = col.getAttribute("data-away-score");
+
+            // Since the same numbers can win multiple quarters we check each quarter against our numbers with individual if statements
+            if (homeNum == homeFirstQuarter && awayNum == awayFirstQuarter) {
+                console.log("You Won $" + qt1Payout)
+            }
+
+            if (homeNum == homeSecondQuarter && awayNum == awaySecondQuarter) {
+                console.log("You Won $" + qt2Payout)
+            }
+            if (homeNum == homeThirdQuarter && awayNum == awayThirdQuarter) {
+                console.log("You Won $" + qt3Payout)
+            }
+            if (homeNum == homeFourthQuarter && awayNum == awayFourthQuarter) {
+                console.log("You Won $" + qt4Payout)
+            }
+        }
+    }
+
+
+}
 
 
 var getGif = function() {
@@ -305,12 +352,16 @@ teamDropDownEl.addEventListener("click", function(event) {
 
 homeScoreDropDownEl.addEventListener("click", function(event) {
     var btn = event.target;
+    var value = btn.getAttribute("data-home-score-")
+    homeScoreTitleEL.setAttribute("data-home-score-", value)
     homeScoreTitleEL.textContent = btn.textContent;
     console.log(btn)
 })
 
 awayScoreDropDownEl.addEventListener("click", function(event) {
     var btn = event.target;
+    var value = btn.getAttribute("data-away-score-")
+    awayScoreTitleEL.setAttribute("data-away-score-", value)
     awayScoreTitleEL.textContent = btn.textContent;
     console.log(btn)
 })
@@ -328,3 +379,4 @@ clearListBtnEL.addEventListener("click", function() {
     savedItemsID = 0;
 })
 
+checkBoxesBtnEL.addEventListener("click", didIWin)
