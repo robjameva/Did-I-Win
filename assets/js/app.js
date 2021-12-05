@@ -289,20 +289,26 @@ var didIWin = function() {
             //columns would be accessed using the "col" variable assigned in the for loop
             var homeNum = col.getAttribute("data-home-score");
             var awayNum = col.getAttribute("data-away-score");
-
             // Since the same numbers can win multiple quarters we check each quarter against our numbers with individual if statements
-            if (homeNum == homeFirstQuarter && awayNum == awayFirstQuarter) {
+            if (j == 1 && homeNum == homeFirstQuarter && awayNum == awayFirstQuarter) {
                 console.log("You Won $" + qt1Payout)
+                col.setAttribute("style", "background-color:lightgreen")
             }
 
-            if (homeNum == homeSecondQuarter && awayNum == awaySecondQuarter) {
+            if (j == 2 && homeNum == homeSecondQuarter && awayNum == awaySecondQuarter) {
                 console.log("You Won $" + qt2Payout)
+                col.setAttribute("style", "background-color:lightgreen")
+                console.log(col)
             }
-            if (homeNum == homeThirdQuarter && awayNum == awayThirdQuarter) {
+            if (j == 3 && homeNum == homeThirdQuarter && awayNum == awayThirdQuarter) {
                 console.log("You Won $" + qt3Payout)
+                col.setAttribute("style", "background-color:lightgreen")
+                console.log(col)
             }
-            if (homeNum == homeFourthQuarter && awayNum == awayFourthQuarter) {
+            if (j == 4 && homeNum == homeFourthQuarter && awayNum == awayFourthQuarter) {
                 console.log("You Won $" + qt4Payout)
+                col.setAttribute("style", "background-color:lightgreen")
+                console.log(col)
             }
         }
     }
