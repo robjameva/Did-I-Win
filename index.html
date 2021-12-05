@@ -134,14 +134,20 @@
 
   <div class="row">
     <div class="col"></div>
-    <table id="user-num-table" class="col table table-bordered">
+    <table class="col table table-bordered">
         <tr>
-            <th>Numbers</th>
-            <th>1st Quarter</th>
-            <th>2nd Quarter</th>
-            <th>3rd Quarter</th>
-            <th>Final Score</th>
+            <thead>
+                <th>Numbers</th>
+                <th>1st Quarter</th>
+                <th>2nd Quarter</th>
+                <th>3rd Quarter</th>
+                <th>Final Score</th>
+            </thead>
         </tr> 
+        <!-- Table body is dynamically populated with JS -->
+        <tbody id="user-num-table">
+
+        </tbody>
   </div>
 <div>
   <button class="btn btn-secondary " type="button">
@@ -149,7 +155,7 @@
   </button>
 </div>
 <div>
-  <button class="btn btn-secondary " type="button">
+  <button class="btn btn-secondary " type="button" id="clear-btn">
     Clear Watchlist
   </button>
 </div>

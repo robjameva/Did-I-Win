@@ -22,6 +22,8 @@ var quarter2PayoutEL = document.getElementById("quarter-2-txt")
 var quarter3PayoutEL = document.getElementById("quarter-3-txt")
 var quarter4PayoutEL = document.getElementById("quarter-4-txt")
 
+var clearListBtnEL = document.getElementById("clear-btn")
+
 // Global Variables
 var team = null;
 var week = null;
@@ -314,4 +316,15 @@ awayScoreDropDownEl.addEventListener("click", function(event) {
 })
 
 addToPoolBtnEL.addEventListener("click", addToPoolWatchlist)
+
+clearListBtnEL.addEventListener("click", function() {
+    watchListEL.innerHTML = "";
+
+    for (var i = 0; i < savedItemsID; i++) {
+        if (localStorage.getItem(i)) {
+            localStorage.removeItem(i)
+        }
+    }
+    savedItemsID = 0;
+})
 
