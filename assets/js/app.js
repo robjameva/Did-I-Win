@@ -32,6 +32,7 @@ var qt1Payout = 100;
 var qt2Payout = 150;
 var qt3Payout = 100;
 var qt4Payout = 300;
+var savedItemsID = 0;
 
 var homeScores = {
     team: null,
@@ -184,8 +185,79 @@ var didIWin = function() {
 
 }
 
+var addToPoolWatchlist = function() {
+    var tableRowEl = document.createElement("tr");
+    var tableDataTeamsEl = document.createElement("td");
+    var tableDataQ1El = document.createElement("td");
+    var tableDataQ2El = document.createElement("td");
+    var tableDataQ3El = document.createElement("td");
+    var tableDataQ4El = document.createElement("td");
+
+    tableDataTeamsEl.innerHTML = homeScoreTitleEL.textContent + "<br>" + awayScoreTitleEL.textContent;
+    tableDataQ1El.innerHTML = "$" + quarter1PayoutEL.value;
+    tableDataQ2El.innerHTML = "$" + quarter2PayoutEL.value;
+    tableDataQ3El.innerHTML = "$" + quarter3PayoutEL.value;
+    tableDataQ4El.innerHTML = "$" + quarter4PayoutEL.value;
+
+    tableRowEl.appendChild(tableDataTeamsEl);
+    tableRowEl.appendChild(tableDataQ1El);
+    tableRowEl.appendChild(tableDataQ2El);
+    tableRowEl.appendChild(tableDataQ3El);
+    tableRowEl.appendChild(tableDataQ4El);
+
+    watchListEL.appendChild(tableRowEl);
+    saveNumbersToLocalStorage();
+}
+
+var saveNumbersToLocalStorage = function() {
+    var savedNumbers = {
+        homeTeam: homeScoreTitleEL.textContent,
+        awayTeam: awayScoreTitleEL.textContent,
+        q1: quarter1PayoutEL.value,
+        q2: quarter2PayoutEL.value,
+        q3: quarter3PayoutEL.value,
+        q4: quarter4PayoutEL.value,
+    }
+
+    localStorage.setItem(savedItemsID, JSON.stringify(savedNumbers))
+    savedItemsID++
+}
+
+var loadPoolWatchlist = function(data) {
+    var tableRowEl = document.createElement("tr");
+    var tableDataTeamsEl = document.createElement("td");
+    var tableDataQ1El = document.createElement("td");
+    var tableDataQ2El = document.createElement("td");
+    var tableDataQ3El = document.createElement("td");
+    var tableDataQ4El = document.createElement("td");
+
+    tableDataTeamsEl.innerHTML = data.homeTeam + "<br>" + data.awayTeam;
+    tableDataQ1El.innerHTML = "$" + data.q1;
+    tableDataQ2El.innerHTML = "$" + data.q2;
+    tableDataQ3El.innerHTML = "$" + data.q3;
+    tableDataQ4El.innerHTML = "$" + data.q4;
+
+    tableRowEl.appendChild(tableDataTeamsEl);
+    tableRowEl.appendChild(tableDataQ1El);
+    tableRowEl.appendChild(tableDataQ2El);
+    tableRowEl.appendChild(tableDataQ3El);
+    tableRowEl.appendChild(tableDataQ4El);
+
+    watchListEL.appendChild(tableRowEl);
+}
+
+if (localStorage.getItem(0)) {
+    for (var i = 0; i < localStorage.length; i++) {
+        if (localStorage.getItem(i) != null) {
+            SavedData = JSON.parse(localStorage.getItem(i))
+            console.log(SavedData)
+            loadPoolWatchlist(SavedData)
+            savedItemsID++
+        }
 
 
+    }
+}
 
 
 
@@ -241,26 +313,5 @@ awayScoreDropDownEl.addEventListener("click", function(event) {
     console.log(btn)
 })
 
-addToPoolBtnEL.addEventListener("click", function() {
-    var tableRowEl = document.createElement("tr");
-    var tableDataTeamsEl = document.createElement("td");
-    var tableDataQ1El = document.createElement("td");
-    var tableDataQ2El = document.createElement("td");
-    var tableDataQ3El = document.createElement("td");
-    var tableDataQ4El = document.createElement("td");
-
-    tableDataTeamsEl.innerHTML = homeScoreTitleEL.textContent + "<br>" + awayScoreTitleEL.textContent;
-    tableDataQ1El.innerHTML = "$" + quarter1PayoutEL.value;
-    tableDataQ2El.innerHTML = "$" + quarter2PayoutEL.value;
-    tableDataQ3El.innerHTML = "$" + quarter3PayoutEL.value;
-    tableDataQ4El.innerHTML = "$" + quarter4PayoutEL.value;
-
-    tableRowEl.appendChild(tableDataTeamsEl);
-    tableRowEl.appendChild(tableDataQ1El);
-    tableRowEl.appendChild(tableDataQ2El);
-    tableRowEl.appendChild(tableDataQ3El);
-    tableRowEl.appendChild(tableDataQ4El);
-
-    watchListEL.appendChild(tableRowEl);
-})
+addToPoolBtnEL.addEventListener("click", addToPoolWatchlist)
 
