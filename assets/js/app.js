@@ -68,7 +68,7 @@ var getTeamData = function(team) {
                     for (var i = 0; i < data.length; i++) {
                         sessionStorage.setItem("ID" + i, JSON.stringify(data[i]));
                         if (data[i].Team === team) {
-                            localStorage.setItem("GameKey", data[i].GameKey)
+                            localStorage.setItem("GameKey", data[i].GameKey);
                         }
                     }
                     setLocalStorage();
@@ -272,15 +272,6 @@ var didIWin = function() {
 
     console.log(homeFirstQuarter, homeSecondQuarter, homeThirdQuarter, homeFourthQuarter)
     console.log(awayFirstQuarter, awaySecondQuarter, awayThirdQuarter, awayFourthQuarter)
-
-
-    var qt1Payout = 100;
-    var qt2Payout = 150;
-    var qt3Payout = 100;
-    var qt4Payout = 300;
-
-
-
 
     for (var i = 0, row; row = watchListEL.rows[i]; i++) {
         for (var j = 0, col; col = row.cells[j]; j++) {
