@@ -282,29 +282,23 @@ var didIWin = function() {
             var awayNum = col.getAttribute("data-away-score");
             // Since the same numbers can win multiple quarters we check each quarter against our numbers with individual if statements
             if (j == 1 && homeNum == homeFirstQuarter && awayNum == awayFirstQuarter) {
-                console.log("You Won $" + qt1Payout)
                 col.setAttribute("style", "background-color:lightgreen")
             }
 
             if (j == 2 && homeNum == homeSecondQuarter && awayNum == awaySecondQuarter) {
-                console.log("You Won $" + qt2Payout)
                 col.setAttribute("style", "background-color:lightgreen")
                 console.log(col)
             }
             if (j == 3 && homeNum == homeThirdQuarter && awayNum == awayThirdQuarter) {
-                console.log("You Won $" + qt3Payout)
                 col.setAttribute("style", "background-color:lightgreen")
                 console.log(col)
             }
             if (j == 4 && homeNum == homeFourthQuarter && awayNum == awayFourthQuarter) {
-                console.log("You Won $" + qt4Payout)
                 col.setAttribute("style", "background-color:lightgreen")
                 console.log(col)
             }
         }
     }
-
-
 }
 
 
