@@ -2,8 +2,12 @@
 	--green: #3A9E3D;
 }
 
+
 .body {
-	background-color: var(--green);
+
+	background-image: url("../images/football\ field\ background.svg");
+	background-size: 100%;
+	
 }
 
 .image {
