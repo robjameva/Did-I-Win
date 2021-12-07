@@ -1,3 +1,10 @@
+:root {
+	--green: #3A9E3D;
+}
+
+.body {
+	background-color: var(--green);
+}
 
 .image {
 display: flex;
