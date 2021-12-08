@@ -13,11 +13,14 @@
 .image {
 display: flex;
 align-content: center;
+max-width: 50%;
+max-height: 50%;
+margin: auto;
 }
 
 .nfl-img {
-  height: 300px;
-  width: 250px;
+  max-height: 50%;
+  max-width: 50%;
   margin: auto;
 }
 
