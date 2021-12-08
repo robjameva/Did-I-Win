@@ -25,6 +25,7 @@ var quarter4PayoutEL = document.getElementById("quarter-4-txt")
 var clearListBtnEL = document.getElementById("clear-btn")
 var checkBoxesBtnEL = document.getElementById("check-boxes")
 
+var iframeEL = document.getElementById("gif")
 
 // Global Variables
 var team = null;
@@ -303,15 +304,16 @@ var didIWin = function() {
 
 
 var getGif = function() {
-    var key = "fQZBkKj2uURFmvRafbYRbv2aDkkmDEWf"
+    var key = "XWbi585lJ6vdGLmmibPxsX3flhBKdwN5"
     let apiUrl = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=win&limit=25&offset=0&rating=g&lang=en`
 
+    var randomNum = Math.floor(Math.random()* 25)
     fetch(apiUrl)
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
-                    console.log(data.data[0].images.fixed_height.url)
-
+                    iframeEL.setAttribute("src",data.data[randomNum].images.fixed_height.url)
+                        
                 });
             }
             else {
@@ -319,6 +321,19 @@ var getGif = function() {
             }
         })
 }
+
+//modal logic
+//const launchBtn = document.getElementById("launchmodal");
+//launchBtn.addEventListener("click",function(){
+   // launchGif()
+//})
+function launchGif(){
+    getGif()
+    myModal.show()
+}
+var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+    keyboard: false
+  })
 
 
 //getGif();
@@ -332,6 +347,7 @@ gameWeekDropDownEl.addEventListener("click", function(event) {
     if (team != null) {
         getTeamData(team);
     }
+    launchGif();
 })
 
 teamDropDownEl.addEventListener("click", function(event) {
