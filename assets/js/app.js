@@ -33,8 +33,9 @@ var week = null;
 
 var savedItemsID = 0;
 
-var homeScores = {
+var homeData = {
     team: null,
+    threeLetter: null,
     q1: null,
     q2: null,
     q3: null,
@@ -42,8 +43,9 @@ var homeScores = {
     overtime: null,
 }
 
-var awayScores = {
+var awayData = {
     team: null,
+    threeLetter: null,
     q1: null,
     q2: null,
     q3: null,
@@ -98,22 +100,22 @@ var setLocalStorage = function() {
 
 // Sets the global obejcts for home and away teams with the relevent data from local storage
 var setTeamData = function() {
-    var homeTeamData = localStorage.getItem("HOME");
-    var awayTeamData = localStorage.getItem("AWAY");
-    var homeTeamParsed = JSON.parse(homeTeamData);
-    var awayTeamParsed = JSON.parse(awayTeamData);
+    var homeTeamParsed = JSON.parse(localStorage.getItem("HOME"));
+    var awayTeamParsed = JSON.parse(localStorage.getItem("AWAY"));
 
-    homeScores.team = homeTeamParsed.TeamName;
-    homeScores.q1 = homeTeamParsed.ScoreQuarter1;
-    homeScores.q2 = homeTeamParsed.ScoreQuarter2;
-    homeScores.q3 = homeTeamParsed.ScoreQuarter3;
-    homeScores.q4 = homeTeamParsed.ScoreQuarter4;
+    homeData.team = homeTeamParsed.TeamName;
+    homeData.threeLetter = homeTeamParsed.Team;
+    homeData.q1 = homeTeamParsed.ScoreQuarter1;
+    homeData.q2 = homeTeamParsed.ScoreQuarter2;
+    homeData.q3 = homeTeamParsed.ScoreQuarter3;
+    homeData.q4 = homeTeamParsed.ScoreQuarter4;
 
-    awayScores.team = awayTeamParsed.TeamName;
-    awayScores.q1 = awayTeamParsed.ScoreQuarter1;
-    awayScores.q2 = awayTeamParsed.ScoreQuarter2;
-    awayScores.q3 = awayTeamParsed.ScoreQuarter3;
-    awayScores.q4 = awayTeamParsed.ScoreQuarter4;
+    awayData.team = awayTeamParsed.TeamName;
+    awayData.threeLetter = awayTeamParsed.Team
+    awayData.q1 = awayTeamParsed.ScoreQuarter1;
+    awayData.q2 = awayTeamParsed.ScoreQuarter2;
+    awayData.q3 = awayTeamParsed.ScoreQuarter3;
+    awayData.q4 = awayTeamParsed.ScoreQuarter4;
 }
 
 // Dynamically creates score buttons for the dropdown to include the team name
@@ -126,12 +128,12 @@ var createScoreBtns = function(num, homeOrAway, team) {
 
     if (homeOrAway === "home") {
         homeScoreDropDownEl.appendChild(scoreLi);
-        homeScoreTitleEL.textContent = homeScores.team;
+        homeScoreTitleEL.textContent = homeData.team;
         scoreBtn.setAttribute("data-home-score-", num);
     }
     else {
         awayScoreDropDownEl.appendChild(scoreLi);
-        awayScoreTitleEL.textContent = awayScores.team;
+        awayScoreTitleEL.textContent = awayData.team;
         scoreBtn.setAttribute("data-away-score-", num);
     }
 }
@@ -147,8 +149,8 @@ var checkDropdownChildren = function() {
 // Function to call createScoreBtns for both the home and away teams
 var renderScoreBtns = function() {
     for (var i = 0; i < 10; i++) {
-        createScoreBtns(i, "home", homeScores.team);
-        createScoreBtns(i, "away", awayScores.team);
+        createScoreBtns(i, "home", homeData.team);
+        createScoreBtns(i, "away", awayData.team);
     }
 }
 
@@ -261,18 +263,21 @@ if (localStorage.getItem(0)) {
 // Logic to check if the users numbers match the winning numbers
 var didIWin = function() {
     // Get total score per quarter and only look at the last didgit
-    var homeFirstQuarter = homeScores.q1 % 10;
-    var homeSecondQuarter = (homeScores.q1 + homeScores.q2) % 10;
-    var homeThirdQuarter = (homeScores.q1 + homeScores.q2 + homeScores.q3) % 10;
-    var homeFourthQuarter = (homeScores.q1 + homeScores.q2 + homeScores.q3 + homeScores.q4) % 10;
+    var homeFirstQuarter = homeData.q1 % 10;
+    var homeSecondQuarter = (homeData.q1 + homeData.q2) % 10;
+    var homeThirdQuarter = (homeData.q1 + homeData.q2 + homeData.q3) % 10;
+    var homeFourthQuarter = (homeData.q1 + homeData.q2 + homeData.q3 + homeData.q4) % 10;
 
-    var awayFirstQuarter = awayScores.q1 % 10;
-    var awaySecondQuarter = (awayScores.q1 + awayScores.q2) % 10;
-    var awayThirdQuarter = (awayScores.q1 + awayScores.q2 + awayScores.q3) % 10;
-    var awayFourthQuarter = (awayScores.q1 + awayScores.q2 + awayScores.q3 + awayScores.q4) % 10;
+    var awayFirstQuarter = awayData.q1 % 10;
+    var awaySecondQuarter = (awayData.q1 + awayData.q2) % 10;
+    var awayThirdQuarter = (awayData.q1 + awayData.q2 + awayData.q3) % 10;
+    var awayFourthQuarter = (awayData.q1 + awayData.q2 + awayData.q3 + awayData.q4) % 10;
 
     console.log(homeFirstQuarter, homeSecondQuarter, homeThirdQuarter, homeFourthQuarter)
     console.log(awayFirstQuarter, awaySecondQuarter, awayThirdQuarter, awayFourthQuarter)
+
+    // var currentQuarter = getQuarter(homeData.threeLetter);
+    // console.log(currentQuarter);
 
     for (var i = 0, row; row = watchListEL.rows[i]; i++) {
         for (var j = 0, col; col = row.cells[j]; j++) {
@@ -303,6 +308,27 @@ var didIWin = function() {
 }
 
 
+var getQuarter = function(selectedTeam) {
+    var key = "3e0e0d8d140747b997880c8e9c121ac8"
+    var season = "2021";
+    let apiUrl = `https://api.sportsdata.io/v3/nfl/pbp/json/PlayByPlay/${season}/${week}/${selectedTeam}?key=${key}`
+    let currentQuarter = null;
+
+    fetch(apiUrl)
+        .then(function(response) {
+            if (response.ok) {
+                response.json().then(function(data) {
+                    currentQuarter = data.Quarters.length;
+                    console.log(currentQuarter)
+
+                });
+            }
+        })
+    console.log(currentQuarter)
+    return currentQuarter;
+}
+
+
 var getGif = function() {
     var key = "XWbi585lJ6vdGLmmibPxsX3flhBKdwN5"
     let apiUrl = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=win&limit=25&offset=0&rating=g&lang=en`
@@ -322,6 +348,7 @@ var getGif = function() {
         })
 }
 
+
 //modal logic
 //const launchBtn = document.getElementById("launchmodal");
 //launchBtn.addEventListener("click",function(){
@@ -336,8 +363,17 @@ var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
   })
 
 
-//getGif();
 
+var clearPool = function() {
+    watchListEL.innerHTML = "";
+
+    for (var i = 0; i < savedItemsID; i++) {
+        if (localStorage.getItem(i)) {
+            localStorage.removeItem(i)
+        }
+    }
+    savedItemsID = 0;
+}
 
 // Event Listeners
 gameWeekDropDownEl.addEventListener("click", function(event) {
@@ -375,15 +411,6 @@ awayScoreDropDownEl.addEventListener("click", function(event) {
 
 addToPoolBtnEL.addEventListener("click", addToPoolWatchlist)
 
-clearListBtnEL.addEventListener("click", function() {
-    watchListEL.innerHTML = "";
-
-    for (var i = 0; i < savedItemsID; i++) {
-        if (localStorage.getItem(i)) {
-            localStorage.removeItem(i)
-        }
-    }
-    savedItemsID = 0;
-})
+clearListBtnEL.addEventListener("click", clearPool)
 
 checkBoxesBtnEL.addEventListener("click", didIWin)
