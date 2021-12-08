@@ -31,6 +31,7 @@ var team = null;
 var week = null;
 
 var savedItemsID = 0;
+var currentQuarter = null;
 
 var homeData = {
     team: null,
@@ -259,6 +260,26 @@ if (localStorage.getItem(0)) {
     }
 }
 
+var getQuarter = function(selectedTeam) {
+    var key = "3e0e0d8d140747b997880c8e9c121ac8"
+    var season = "2021";
+    var apiUrl = `https://api.sportsdata.io/v3/nfl/pbp/json/PlayByPlay/${season}/${week}/${selectedTeam}?key=${key}`
+
+    fetch(apiUrl)
+        .then(function(response) {
+            if (response.ok) {
+                response.json().then(function(data) {
+                    currentQuarter = data.Quarters.length;
+                    console.log(currentQuarter)
+                    return currentQuarter
+                }).then(function(currentQuarter) {
+                    console.log(currentQuarter)
+                    return currentQuarter;
+                });
+            }
+        })
+}
+
 // Logic to check if the users numbers match the winning numbers
 var didIWin = function() {
     // Get total score per quarter and only look at the last didgit
@@ -275,8 +296,8 @@ var didIWin = function() {
     console.log(homeFirstQuarter, homeSecondQuarter, homeThirdQuarter, homeFourthQuarter)
     console.log(awayFirstQuarter, awaySecondQuarter, awayThirdQuarter, awayFourthQuarter)
 
-    // var currentQuarter = getQuarter(homeData.threeLetter);
-    // console.log(currentQuarter);
+    currentQuarter = getQuarter(homeData.threeLetter);
+    console.log(currentQuarter);
 
     for (var i = 0, row; row = watchListEL.rows[i]; i++) {
         for (var j = 0, col; col = row.cells[j]; j++) {
@@ -289,43 +310,22 @@ var didIWin = function() {
             if (j == 1 && homeNum == homeFirstQuarter && awayNum == awayFirstQuarter) {
                 col.setAttribute("style", "background-color:lightgreen")
             }
-
             if (j == 2 && homeNum == homeSecondQuarter && awayNum == awaySecondQuarter) {
                 col.setAttribute("style", "background-color:lightgreen")
-                console.log(col)
             }
             if (j == 3 && homeNum == homeThirdQuarter && awayNum == awayThirdQuarter) {
                 col.setAttribute("style", "background-color:lightgreen")
-                console.log(col)
             }
             if (j == 4 && homeNum == homeFourthQuarter && awayNum == awayFourthQuarter) {
                 col.setAttribute("style", "background-color:lightgreen")
-                console.log(col)
+
             }
         }
     }
 }
 
 
-var getQuarter = function(selectedTeam) {
-    var key = "3e0e0d8d140747b997880c8e9c121ac8"
-    var season = "2021";
-    let apiUrl = `https://api.sportsdata.io/v3/nfl/pbp/json/PlayByPlay/${season}/${week}/${selectedTeam}?key=${key}`
-    let currentQuarter = null;
 
-    fetch(apiUrl)
-        .then(function(response) {
-            if (response.ok) {
-                response.json().then(function(data) {
-                    currentQuarter = data.Quarters.length;
-                    console.log(currentQuarter)
-
-                });
-            }
-        })
-    console.log(currentQuarter)
-    return currentQuarter;
-}
 
 
 
