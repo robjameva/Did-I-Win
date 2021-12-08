@@ -2,7 +2,9 @@
 	--green: #3A9E3D;
 }
 
-
+*{
+	font-family: 'Fira Sans', sans-serif;
+}
 .body {
 
 	background-image: url("../images/football\ field\ background.svg");
