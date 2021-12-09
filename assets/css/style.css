@@ -2,18 +2,27 @@
 	--green: #3A9E3D;
 }
 
+*{
+	font-family: 'Fira Sans', sans-serif;
+}
 .body {
-	background-color: var(--green);
+
+	background-image: url("../images/football\ field\ background.svg");
+	background-size: 100%;
+	
 }
 
 .image {
 display: flex;
 align-content: center;
+max-width: 50%;
+max-height: 50%;
+margin: auto;
 }
 
 .nfl-img {
-  height: 300px;
-  width: 250px;
+  max-height: 50%;
+  max-width: 50%;
   margin: auto;
 }
 
