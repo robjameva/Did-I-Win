@@ -25,6 +25,7 @@ var quarter4PayoutEL = document.getElementById("quarter-4-txt")
 var clearListBtnEL = document.getElementById("clear-btn")
 var checkBoxesBtnEL = document.getElementById("check-boxes")
 
+var iframeEL = document.getElementById("gif")
 
 // Global Variables
 var team = null;
@@ -299,9 +300,6 @@ var didIWin = function() {
     console.log(homeFirstQuarter, homeSecondQuarter, homeThirdQuarter, homeFourthQuarter)
     console.log(awayFirstQuarter, awaySecondQuarter, awayThirdQuarter, awayFourthQuarter)
 
-    console.log(currentQuarter)
-    console.log(isGameOver)
-
     for (var i = 0, row; row = watchListEL.rows[i]; i++) {
         for (var j = 0, col; col = row.cells[j]; j++) {
             var col = row.cells[j]
@@ -314,42 +312,56 @@ var didIWin = function() {
             // Since the same numbers can win multiple quarters we check each quarter against our numbers with individual if statements
             if (j == 1 && homeNum == homeFirstQuarter && awayNum == awayFirstQuarter && currentQuarter >= 2 && currentQuarter != 0) {
                 col.setAttribute("style", "background-color:lightgreen")
+                launchGif();
             }
             if (j == 2 && homeNum == homeSecondQuarter && awayNum == awaySecondQuarter && currentQuarter >= 3) {
                 col.setAttribute("style", "background-color:lightgreen")
+                launchGif();
             }
             if (j == 3 && homeNum == homeThirdQuarter && awayNum == awayThirdQuarter && currentQuarter >= 4) {
                 col.setAttribute("style", "background-color:lightgreen")
+                launchGif();
             }
             if (j == 4 && homeNum == homeFourthQuarter && awayNum == awayFourthQuarter && isGameOver) {
                 col.setAttribute("style", "background-color:lightgreen")
-
+                launchGif();
             }
         }
     }
 }
 
 
-
-
-
 var getGif = function() {
-    var key = "fQZBkKj2uURFmvRafbYRbv2aDkkmDEWf"
+    var key = "XWbi585lJ6vdGLmmibPxsX3flhBKdwN5"
     let apiUrl = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=win&limit=25&offset=0&rating=g&lang=en`
 
+    var randomNum = Math.floor(Math.random() * 25)
     fetch(apiUrl)
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
-                    console.log(data.data[0].images.fixed_height.url)
-
+                    iframeEL.setAttribute("src", data.data[randomNum].images.fixed_height.url)
                 });
             }
-            else {
-                alert("City Not Found");
-            }
+
         })
 }
+
+
+//modal logic
+//const launchBtn = document.getElementById("launchmodal");
+//launchBtn.addEventListener("click",function(){
+// launchGif()
+//})
+function launchGif() {
+    getGif()
+    myModal.show()
+}
+
+var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+    keyboard: false
+})
+
 
 var clearPool = function() {
     watchListEL.innerHTML = "";
