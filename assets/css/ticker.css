@@ -1,0 +1,74 @@
+/* www.code-boxx.com/html-css-news-ticker-horizontal-vertical/
+/* (A) STANDARD ROW HEIGHT */
+.vwrap, .vitem {
+    height: 30px;
+    line-height: 30px;
+  }
+   
+  /* (B) FIXED WRAPPER */
+  .vwrap {
+    overflow: hidden; /* HIDE SCROLL BAR */
+    background:yellow;
+    flex-wrap: inherit;
+  }
+  /* (C) TICKER ITEMS */
+  .vitem { text-align: center; }
+   
+  /* (D) ANIMATION - MOVE ITEMS FROM TOP TO BOTTOM */
+  /* CHANGE KEYFRAMES IF YOU ADD/REMOVE ITEMS */
+  .vmove { position: relative; }
+  @keyframes tickerv {
+     0% { bottom: 0; } /* FIRST ITEM */
+     5% { bottom: 30px; }
+     10% { bottom: 60px; }
+     15% { bottom: 90px; } 
+     20% { bottom: 120px; }
+     25% { bottom: 150px; } 
+     30% { bottom: 180px; }
+     35% { bottom: 210px; }
+     40% { bottom: 240px; }
+     45% { bottom: 270px; }
+     50% { bottom: 300px; }
+     55% { bottom: 330px; }
+     60% { bottom: 360px; }
+     65% { bottom: 390px; }
+     70% { bottom: 420px; }
+     75% { bottom: 450px; }
+     80% { bottom: 480px; }
+     85% { bottom: 510px; }
+     90% { bottom: 540px; }
+     95% { bottom: 570px; }
+     100% { bottom: 600px; }
+     105% { bottom: 630px; }
+     110% { bottom: 660px; }
+     115% { bottom: 690px; }
+     120% { bottom: 720px; }
+     125% { bottom: 750px; }
+     130% { bottom: 780px; }
+     135% { bottom: 810px; }
+     140% { bottom: 840px; }
+     145% { bottom: 870px; }
+     150% { bottom: 900px; }
+     155% { bottom: 930px; }
+     160% { bottom: 960px; }
+     165% { bottom: 990px; }
+     170% { bottom: 1020px; }
+     175% { bottom: 1050px; }
+     180% { bottom: 1080px; }
+     185% { bottom: 1110px; }
+     190% { bottom: 1140px; }
+     195% { bottom: 1170px; }
+     200% { bottom: 1200px; }
+     205% { bottom: 1230px; }
+     210% { bottom: 1260px; }
+     215% { bottom: 1290px; }
+     220% { bottom: 1320px; }
+     1000% { bottom: 0; } /* BACK TO FIRST */
+  }
+  .vmove {
+    animation-name: tickerv;
+    animation-duration: 50s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(1, 0, .5, 0);
+  }
+  .vmove:hover { animation-play-state: paused; }

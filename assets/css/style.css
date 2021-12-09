@@ -1,0 +1,42 @@
+:root {
+	--green: #3A9E3D;
+}
+
+*{
+	font-family: 'Fira Sans', sans-serif;
+}
+.body {
+
+	background-image: url("../images/football\ field\ background.svg");
+	background-size: 100%;
+	
+}
+
+.image {
+display: flex;
+align-content: center;
+max-width: 50%;
+max-height: 50%;
+margin: auto;
+}
+
+.nfl-img {
+  max-height: 50%;
+  max-width: 50%;
+  margin: auto;
+}
+
+
+.week-btn, 
+.team-btn, 
+.home-score-btn,
+.away-score-btn {
+  background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+  width: 100%;
+}
