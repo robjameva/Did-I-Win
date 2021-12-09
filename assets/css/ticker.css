@@ -12,7 +12,10 @@
     flex-wrap: inherit;
   }
   /* (C) TICKER ITEMS */
-  .vitem { text-align: center; }
+  .vitem {
+     text-align: center; 
+     font-size: 2vw;
+    }
    
   /* (D) ANIMATION - MOVE ITEMS FROM TOP TO BOTTOM */
   /* CHANGE KEYFRAMES IF YOU ADD/REMOVE ITEMS */
