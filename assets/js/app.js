@@ -37,7 +37,7 @@ var isGameOver = null;
 
 var homeData = {
     team: null,
-    threeLetter: null,
+    threevarter: null,
     q1: null,
     q2: null,
     q3: null,
@@ -47,7 +47,7 @@ var homeData = {
 
 var awayData = {
     team: null,
-    threeLetter: null,
+    threevarter: null,
     q1: null,
     q2: null,
     q3: null,
@@ -55,13 +55,11 @@ var awayData = {
     overtime: null
 }
 
-//var teamsArray = ["ARI", "ATL", "BAL", "BUF", "CAR", "CHI", "CIN", "CLE", "DAL", "DEN", "DET", "GB", "HOU", "IND", "JAX", "KC", "LAC","LAR", "LV", "MIA", "MIN", "NE", "NO", "NYG", "NYJ", "PHI", "PIT", "SEA", "SF", "TB", "TEN", "WAS"];
-
 // Main API Call to Sports Data IO
 var getTeamData = function(team) {
     var key = "3e0e0d8d140747b997880c8e9c121ac8";
     var season = "2021";
-    let apiUrl = `https://api.sportsdata.io/v3/nfl/scores/json/TeamGameStats/${season}/${week}?key=${key}`
+    var apiUrl = `https://api.sportsdata.io/v3/nfl/scores/json/TeamGameStats/${season}/${week}?key=${key}`
 
     // In this API call we get the data for every game for the week that is specified in the URL
     // Each game data object is saved to session storage
@@ -106,21 +104,21 @@ var setTeamData = function() {
     var awayTeamParsed = JSON.parse(localStorage.getItem("AWAY"));
 
     homeData.team = homeTeamParsed.TeamName;
-    homeData.threeLetter = homeTeamParsed.Team;
+    homeData.threevarter = homeTeamParsed.Team;
     homeData.q1 = homeTeamParsed.ScoreQuarter1;
     homeData.q2 = homeTeamParsed.ScoreQuarter2;
     homeData.q3 = homeTeamParsed.ScoreQuarter3;
     homeData.q4 = homeTeamParsed.ScoreQuarter4;
 
     awayData.team = awayTeamParsed.TeamName;
-    awayData.threeLetter = awayTeamParsed.Team
+    awayData.threevarter = awayTeamParsed.Team
     awayData.q1 = awayTeamParsed.ScoreQuarter1;
     awayData.q2 = awayTeamParsed.ScoreQuarter2;
     awayData.q3 = awayTeamParsed.ScoreQuarter3;
     awayData.q4 = awayTeamParsed.ScoreQuarter4;
 
     // Calls the SportsDataIO API to get the live current quarter
-    currentQuarter = getQuarter(homeData.threeLetter);
+    currentQuarter = getQuarter(homeData.threevarter);
 
 }
 
@@ -330,10 +328,10 @@ var didIWin = function() {
     }
 }
 
-
+// Gihy API call to get a random GIF with the search term "Win"
 var getGif = function() {
-    var key = "XWbi585lJ6vdGLmmibPxsX3flhBKdwN5"
-    let apiUrl = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=win&limit=25&offset=0&rating=g&lang=en`
+    var key = "fQZBkKj2uURFmvRafbYRbv2aDkkmDEWf"
+    var apiUrl = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=win&limit=25&offset=0&rating=g&lang=en`
 
     var randomNum = Math.floor(Math.random() * 25)
     fetch(apiUrl)
@@ -347,18 +345,18 @@ var getGif = function() {
         })
 }
 
-
-
+// Function used to show the modal that contains the gif
 function launchGif() {
     getGif()
     myModal.show()
 }
 
+// Initializes the modal
 var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
     keyboard: false
 })
 
-
+// Removes line items from pool and local storage
 var clearPool = function() {
     watchListEL.innerHTML = "";
 
