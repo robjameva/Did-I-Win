@@ -32,6 +32,8 @@ var team = null;
 var week = null;
 
 var savedItemsID = 0;
+var currentQuarter = null;
+var isGameOver = null;
 
 var homeData = {
     team: null,
@@ -116,6 +118,10 @@ var setTeamData = function() {
     awayData.q2 = awayTeamParsed.ScoreQuarter2;
     awayData.q3 = awayTeamParsed.ScoreQuarter3;
     awayData.q4 = awayTeamParsed.ScoreQuarter4;
+
+    // Calls the SportsDataIO API to get the live current quarter
+    currentQuarter = getQuarter(homeData.threeLetter);
+
 }
 
 // Dynamically creates score buttons for the dropdown to include the team name
@@ -207,6 +213,7 @@ var saveNumbersToLocalStorage = function() {
         q4: quarter4PayoutEL.value,
     }
 
+
     localStorage.setItem(savedItemsID, JSON.stringify(savedNumbers))
     savedItemsID++
 }
@@ -260,6 +267,23 @@ if (localStorage.getItem(0)) {
     }
 }
 
+var getQuarter = function(selectedTeam) {
+    var key = "3e0e0d8d140747b997880c8e9c121ac8"
+    var season = "2021";
+    var apiUrl = `https://api.sportsdata.io/v3/nfl/pbp/json/PlayByPlay/${season}/${week}/${selectedTeam}?key=${key}`
+
+    fetch(apiUrl)
+        .then(function(response) {
+            if (response.ok) {
+                response.json().then(function(data) {
+                    currentQuarter = data.Quarters.length;
+                    isGameOver = data.Score.IsOver;
+
+                })
+            }
+        })
+}
+
 // Logic to check if the users numbers match the winning numbers
 var didIWin = function() {
     // Get total score per quarter and only look at the last didgit
@@ -276,8 +300,8 @@ var didIWin = function() {
     console.log(homeFirstQuarter, homeSecondQuarter, homeThirdQuarter, homeFourthQuarter)
     console.log(awayFirstQuarter, awaySecondQuarter, awayThirdQuarter, awayFourthQuarter)
 
-    // var currentQuarter = getQuarter(homeData.threeLetter);
-    // console.log(currentQuarter);
+    console.log(currentQuarter)
+    console.log(isGameOver)
 
     for (var i = 0, row; row = watchListEL.rows[i]; i++) {
         for (var j = 0, col; col = row.cells[j]; j++) {
@@ -286,18 +310,19 @@ var didIWin = function() {
             //columns would be accessed using the "col" variable assigned in the for loop
             var homeNum = col.getAttribute("data-home-score");
             var awayNum = col.getAttribute("data-away-score");
-            // Since the same numbers can win multiple quarters we check each quarter against our numbers with individual if statements
-            if (j == 1 && homeNum == homeFirstQuarter && awayNum == awayFirstQuarter) {
-                col.setAttribute("style", "background-color:lightgreen")
-            }
 
-            if (j == 2 && homeNum == homeSecondQuarter && awayNum == awaySecondQuarter) {
+
+            // Since the same numbers can win multiple quarters we check each quarter against our numbers with individual if statements
+            if (j == 1 && homeNum == homeFirstQuarter && awayNum == awayFirstQuarter && currentQuarter >= 2 && currentQuarter != 0) {
                 col.setAttribute("style", "background-color:lightgreen")
             }
-            if (j == 3 && homeNum == homeThirdQuarter && awayNum == awayThirdQuarter) {
+            if (j == 2 && homeNum == homeSecondQuarter && awayNum == awaySecondQuarter && currentQuarter >= 3) {
                 col.setAttribute("style", "background-color:lightgreen")
             }
-            if (j == 4 && homeNum == homeFourthQuarter && awayNum == awayFourthQuarter) {
+            if (j == 3 && homeNum == homeThirdQuarter && awayNum == awayThirdQuarter && currentQuarter >= 4) {
+                col.setAttribute("style", "background-color:lightgreen")
+            }
+            if (j == 4 && homeNum == homeFourthQuarter && awayNum == awayFourthQuarter && isGameOver) {
                 col.setAttribute("style", "background-color:lightgreen")
             }
         }
@@ -305,25 +330,7 @@ var didIWin = function() {
 }
 
 
-var getQuarter = function(selectedTeam) {
-    var key = "3e0e0d8d140747b997880c8e9c121ac8"
-    var season = "2021";
-    let apiUrl = `https://api.sportsdata.io/v3/nfl/pbp/json/PlayByPlay/${season}/${week}/${selectedTeam}?key=${key}`
-    let currentQuarter = null;
 
-    fetch(apiUrl)
-        .then(function(response) {
-            if (response.ok) {
-                response.json().then(function(data) {
-                    currentQuarter = data.Quarters.length;
-                    console.log(currentQuarter)
-
-                });
-            }
-        })
-    console.log(currentQuarter)
-    return currentQuarter;
-}
 
 
 var getGif = function() {
