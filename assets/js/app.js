@@ -293,15 +293,12 @@ var didIWin = function() {
 
             if (j == 2 && homeNum == homeSecondQuarter && awayNum == awaySecondQuarter) {
                 col.setAttribute("style", "background-color:lightgreen")
-                console.log(col)
             }
             if (j == 3 && homeNum == homeThirdQuarter && awayNum == awayThirdQuarter) {
                 col.setAttribute("style", "background-color:lightgreen")
-                console.log(col)
             }
             if (j == 4 && homeNum == homeFourthQuarter && awayNum == awayFourthQuarter) {
                 col.setAttribute("style", "background-color:lightgreen")
-                console.log(col)
             }
         }
     }
@@ -333,13 +330,13 @@ var getGif = function() {
     var key = "XWbi585lJ6vdGLmmibPxsX3flhBKdwN5"
     let apiUrl = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=win&limit=25&offset=0&rating=g&lang=en`
 
-    var randomNum = Math.floor(Math.random()* 25)
+    var randomNum = Math.floor(Math.random() * 25)
     fetch(apiUrl)
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
-                    iframeEL.setAttribute("src",data.data[randomNum].images.fixed_height.url)
-                        
+                    iframeEL.setAttribute("src", data.data[randomNum].images.fixed_height.url)
+
                 });
             }
             else {
@@ -352,15 +349,15 @@ var getGif = function() {
 //modal logic
 //const launchBtn = document.getElementById("launchmodal");
 //launchBtn.addEventListener("click",function(){
-   // launchGif()
+// launchGif()
 //})
-function launchGif(){
+function launchGif() {
     getGif()
     myModal.show()
 }
 var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
     keyboard: false
-  })
+})
 
 
 
