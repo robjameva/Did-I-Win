@@ -92,7 +92,7 @@ var getTeamData = function(team) {
 var setLocalStorage = function() {
     var gameKey = localStorage.getItem("GameKey");
     for (var i = 0; i < sessionStorage.length; i++) {
-        data = JSON.parse(sessionStorage.getItem("ID" + i));
+        var data = JSON.parse(sessionStorage.getItem("ID" + i));
         if (data.GameKey == gameKey) {
             localStorage.setItem(data.HomeOrAway, JSON.stringify(data));
         }
@@ -348,11 +348,7 @@ var getGif = function() {
 }
 
 
-//modal logic
-//const launchBtn = document.getElementById("launchmodal");
-//launchBtn.addEventListener("click",function(){
-// launchGif()
-//})
+
 function launchGif() {
     getGif()
     myModal.show()
