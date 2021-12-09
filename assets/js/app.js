@@ -333,7 +333,6 @@ var didIWin = function() {
 
 
 
-
 var getGif = function() {
     var key = "fQZBkKj2uURFmvRafbYRbv2aDkkmDEWf"
     let apiUrl = `https://api.giphy.com/v1/gifs/search?api_key=${key}&q=win&limit=25&offset=0&rating=g&lang=en`
