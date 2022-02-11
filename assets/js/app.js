@@ -28,7 +28,7 @@ var checkBoxesBtnEL = document.getElementById("check-boxes")
 var iframeEL = document.getElementById("gif")
 
 // Global Variables
-var team = null;
+var team = 'CIN';
 var week = null;
 
 var savedItemsID = 0;
@@ -58,8 +58,8 @@ var awayData = {
 // Main API Call to Sports Data IO
 var getTeamData = function(team) {
     var key = "3e0e0d8d140747b997880c8e9c121ac8";
-    var season = "2021";
-    var apiUrl = `https://api.sportsdata.io/v3/nfl/scores/json/TeamGameStats/${season}/${week}?key=${key}`
+    var season = "2021POST";
+    var apiUrl = `https://api.sportsdata.io/v3/nfl/scores/json/TeamGameStats/${season}/3?key=${key}`
 
     // In this API call we get the data for every game for the week that is specified in the URL
     // Each game data object is saved to session storage
@@ -89,7 +89,7 @@ var getTeamData = function(team) {
 // Sets local storage to save only the game objects for the selected team and their opponent by looking for the Game Key saved in the inital API call
 var setLocalStorage = function() {
     var gameKey = localStorage.getItem("GameKey");
-    for (var i = 0; i < sessionStorage.length; i++) {
+    for (var i = 0; i < sessionStorage.length - 1; i++) {
         var data = JSON.parse(sessionStorage.getItem("ID" + i));
         if (data.GameKey == gameKey) {
             localStorage.setItem(data.HomeOrAway, JSON.stringify(data));
@@ -118,7 +118,7 @@ var setTeamData = function() {
     awayData.q4 = awayTeamParsed.ScoreQuarter4;
 
     // Calls the SportsDataIO API to get the live current quarter
-    currentQuarter = getQuarter(homeData.threevarter);
+    currentQuarter = getQuarter('CIN');
 
 }
 
@@ -267,8 +267,8 @@ if (localStorage.getItem(0)) {
 
 var getQuarter = function(selectedTeam) {
     var key = "3e0e0d8d140747b997880c8e9c121ac8"
-    var season = "2021";
-    var apiUrl = `https://api.sportsdata.io/v3/nfl/pbp/json/PlayByPlay/${season}/${week}/${selectedTeam}?key=${key}`
+    var season = "2021POST";
+    var apiUrl = `https://api.sportsdata.io/v3/nfl/pbp/json/PlayByPlay/${season}/3/${selectedTeam}?key=${key}`
 
     fetch(apiUrl)
         .then(function(response) {
@@ -311,6 +311,8 @@ var didIWin = function() {
             if (j == 1 && homeNum == homeFirstQuarter && awayNum == awayFirstQuarter && currentQuarter >= 2 && currentQuarter != 0) {
                 col.setAttribute("style", "background-color:lightgreen")
                 launchGif();
+            } else if (j != 0) {
+                col.setAttribute("style", "background-color:lightcoral")
             }
             if (j == 2 && homeNum == homeSecondQuarter && awayNum == awaySecondQuarter && currentQuarter >= 3) {
                 col.setAttribute("style", "background-color:lightgreen")
@@ -368,22 +370,25 @@ var clearPool = function() {
     savedItemsID = 0;
 }
 
-// Event Listeners
-gameWeekDropDownEl.addEventListener("click", function(event) {
-    var btn = event.target;
-    gameWeekTitleEL.textContent = btn.textContent;
-    week = btn.getAttribute("data-week-num")
-    if (team != null) {
-        getTeamData(team);
-    }
-})
 
-teamDropDownEl.addEventListener("click", function(event) {
-    var btn = event.target;
-    teamTitleEL.textContent = btn.textContent;
-    team = btn.getAttribute("data-team")
-    getTeamData(team);
-})
+// Event Listeners
+// gameWeekDropDownEl.addEventListener("click", function(event) {
+//     var btn = event.target;
+//     gameWeekTitleEL.textContent = btn.textContent;
+//     week = btn.getAttribute("data-week-num")
+//     if (team != null) {
+//         getTeamData(team);
+//     }
+// })
+
+// teamDropDownEl.addEventListener("click", function(event) {
+//     var btn = event.target;
+//     teamTitleEL.textContent = btn.textContent;
+//     team = btn.getAttribute("data-team")
+//     getTeamData(team);
+// })
+
+getTeamData(team);
 
 homeScoreDropDownEl.addEventListener("click", function(event) {
     var btn = event.target;
@@ -406,3 +411,4 @@ addToPoolBtnEL.addEventListener("click", addToPoolWatchlist)
 clearListBtnEL.addEventListener("click", clearPool)
 
 checkBoxesBtnEL.addEventListener("click", didIWin)
+

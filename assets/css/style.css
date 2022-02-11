@@ -9,7 +9,10 @@
 
 	background-image: url("../images/football\ field\ background.svg");
 	background-size: 100%;
-	
+}
+
+button {
+	width: 90% !important;
 }
 
 .image {
@@ -40,3 +43,14 @@ margin: auto;
 	outline: inherit;
   width: 100%;
 }
+
+
+@media screen and (max-width: 575px) {
+    .body {
+
+		background-image: none;
+		background-color: #467448;
+		background-size: 100%;
+	}
+    
+  }

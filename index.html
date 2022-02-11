@@ -30,8 +30,8 @@
 			<img class="nfl-img" src="./assets/images/did-i-win-logo.svg">
 		</div>
 
-	<div class="dropdown d-flex justify-content-center mt-4 mb-4">
-		<button class="btn btn-primary dropdown-toggle" type="button" id="week-dropdown" data-bs-toggle="dropdown" aria-expanded="false">Game Week</button>
+	<!-- <div class="dropdown d-flex justify-content-center mt-4 mb-4">
+		<button class="btn btn-warning dropdown-toggle" type="button" id="week-dropdown" data-bs-toggle="dropdown" aria-expanded="false">Game Week</button>
 		<ul id="week-btn-list" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 			<li><button class="week-btn" data-week-num="1">Week 1</button></li>
 			<li><button class="week-btn" data-week-num="2">Week 2</button></li>
@@ -55,10 +55,10 @@
 			<li><button class="week-btn" data-week-num="3">Conference</button></li>
 			<li><button class="week-btn" data-week-num="4">Super Bowl</button></li>
 		</ul>
-	</div>
+	</div> -->
 
-	<div class="dropdown d-flex justify-content-center mt-4 mb-4">
-		<button class="btn btn-primary dropdown-toggle" type="button" id="team-dropdown" data-bs-toggle="dropdown" aria-expanded="false">Choose your team</button>
+	<!-- <div class="dropdown d-flex justify-content-center mt-4 mb-4">
+		<button class="btn btn-warning dropdown-toggle" type="button" id="team-dropdown" data-bs-toggle="dropdown" aria-expanded="false">Choose your team</button>
 			<ul id="team-btn-list" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 			<li><button class="team-btn" data-team="ARI">Arizona Cardinals</button></li>
 			<li><button class="team-btn" data-team="ATL">Atlanta Falcons</button></li>
@@ -93,61 +93,81 @@
 			<li><button class="team-btn" data-team="TEN">Tennessee Titans</button></li>
 			<li><button class="team-btn" data-team="WAS">Washington Football Team</button></li>
 		</ul>
-	</div>
+	</div> -->
 
 
-	<div class="container mx-auto">
-		<div class="row">
+	<!-- <div class="container mx-auto"> -->
+		<div class="row d-flex">
 
-			<div class="col">
-				<div class="row">
+			<div class="col d-flex  flex-column justify-content-center mx-auto align-items-center">
+				<!-- <div class="row"> -->
 					<label for="quarter-1-text" class="col-9 mb-2 bg-light text-dark rounded-2 "> First Quarter Payout</label>
 					<input id="quarter-1-txt" name="quarter-1-txt" class="col-9 mt-2 rounded-2" placeholder="$" type="number"></input>
-				</div>
+				<!-- </div> -->
 			</div>
-			<div class="col">
-				<div class="row">
+			<div class="col d-flex  flex-column justify-content-center mx-auto align-items-center">
+				<!-- <div class="row"> -->
 					<label for="quarter-2-text" class="col-9 mb-2 bg-light text-dark rounded-2"> Second Quarter Payout</label>
 					<input id="quarter-2-txt" name="quarter-2-txt" class="col-9 mt-2 rounded-2" placeholder="$" type="number"></input>
-				</div>
+				<!-- </div> -->
 			</div>
 
-			<div class="col">
-				<div class="row">
+			<div class="col d-flex  flex-column justify-content-center mx-auto align-items-center">
+				<!-- <div class="row"> -->
 					<label for="quarter-3-text" class="col-9 mb-2 bg-light text-dark rounded-2"> Third Quarter Payout</label>
 					<input id="quarter-3-txt" name="quarter-3-txt" class="col-9 mt-2 rounded-2" placeholder="$" type="number"></input>
-				</div>
+				<!-- </div> -->
 			</div>
-			<div class="col">
-				<div class="row">
+			<div class="col d-flex  flex-column justify-content-center mx-auto align-items-center">
+				<!-- <div class="row"> -->
 					<label for="quarter-4-text" class="col-9 mb-2 bg-light text-dark rounded-2"> Final Score Payout</label>
 					<input id="quarter-4-txt" name="quarter-4-txt" class="col-9 mt-2 rounded-2" placeholder="$" type="number"></input>
-				</div>
+				<!-- </div> -->
 			</div>
 
 		</div>
-	</div>
+	<!-- </div> -->
 
 	<div class="container mt-4 mb-4">
 		<div class="row">
 			<div class="btn-group col-6">
-				<button class="btn btn-primary dropdown-toggle" type="button" id="home-score-dropdown" data-bs-toggle="dropdown"aria-expanded="false">Home Team Score</button>
+				<button class="btn btn-warning dropdown-toggle" type="button" id="home-score-dropdown" data-bs-toggle="dropdown"aria-expanded="false">Bengals</button>
 				<ul id="home-score-btn-list" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 					<!-- List built dynamically from JS -->
+					<li><button class="away-score-btn" data-away-score-="0">Bengals: 0</button></li>
+					<li><button class="away-score-btn" data-away-score-="1">Bengals: 1</button></li>
+					<li><button class="away-score-btn" data-away-score-="2">Bengals: 2</button></li>
+					<li><button class="away-score-btn" data-away-score-="3">Bengals: 3</button></li>
+					<li><button class="away-score-btn" data-away-score-="4">Bengals: 4</button></li>
+					<li><button class="away-score-btn" data-away-score-="5">Bengals: 5</button></li>
+					<li><button class="away-score-btn" data-away-score-="6">Bengals: 6</button></li>
+					<li><button class="away-score-btn" data-away-score-="7">Bengals: 7</button></li>
+					<li><button class="away-score-btn" data-away-score-="8">Bengals: 8</button></li>
+					<li><button class="away-score-btn" data-away-score-="9">Bengals: 9</button></li>
 				</ul>
 			</div>
 
 			<div class="btn-group col-6">
-				<button class="btn btn-primary dropdown-toggle" type="button" id="away-score-dropdown" data-bs-toggle="dropdown"aria-expanded="false">Away team Score</button>
+				<button class="btn btn-warning dropdown-toggle" type="button" id="away-score-dropdown" data-bs-toggle="dropdown"aria-expanded="false">Rams</button>
 				<ul id="away-score-btn-list" class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 					<!-- List built dynamically from JS -->
+					<li><button class="home-score-btn" data-home-score-="0">Rams: 0</button></li>
+					<li><button class="home-score-btn" data-home-score-="1">Rams: 1</button></li>
+					<li><button class="home-score-btn" data-home-score-="2">Rams: 2</button></li>
+					<li><button class="home-score-btn" data-home-score-="3">Rams: 3</button></li>
+					<li><button class="home-score-btn" data-home-score-="4">Rams: 4</button></li>
+					<li><button class="home-score-btn" data-home-score-="5">Rams: 5</button></li>
+					<li><button class="home-score-btn" data-home-score-="6">Rams: 6</button></li>
+					<li><button class="home-score-btn" data-home-score-="7">Rams: 7</button></li>
+					<li><button class="home-score-btn" data-home-score-="8">Rams: 8</button></li>
+					<li><button class="home-score-btn" data-home-score-="9">Rams: 9</button></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 
 	<div class="d-flex justify-content-center mt-4 mb-4">
-		<button class="btn btn-primary" type="button" id="add-to-pool">
+		<button class="btn btn-warning" type="button" id="add-to-pool">
 		Add to Pool
 		</button>
 	</div>
@@ -176,14 +196,14 @@
   </div>
 
   <div class="d-flex justify-content-center mt-4 mb-4">
-    <button class="btn btn-primary " type="button" id="check-boxes">
+    <button class="btn btn-warning " type="button" id="check-boxes">
       Check Boxes
     </button>
   </div>
 
 
 <div class="d-flex justify-content-center mt-4 mb-4">
-  <button class="btn btn-primary " type="button" id="clear-btn">
+  <button class="btn btn-warning " type="button" id="clear-btn">
     Clear Watchlist
   </button>
 </div>
@@ -197,8 +217,7 @@
         </div>
         <div class="modal-body">
 
-          <iframe id="gif" width="480" height="270" frameBorder="0"
-            class="giphy-embed" allowFullScreen></iframe>
+			<img id="gif" src="" alt="">
          
         </div>
         <div class="modal-footer">
