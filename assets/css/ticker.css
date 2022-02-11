@@ -8,7 +8,7 @@
   /* (B) FIXED WRAPPER */
   .vwrap {
     overflow: hidden; /* HIDE SCROLL BAR */
-    background:yellow;
+    background:#ffc107;
     flex-wrap: inherit;
   }
   /* (C) TICKER ITEMS */
