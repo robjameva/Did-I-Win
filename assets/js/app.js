@@ -34,6 +34,7 @@ var week = null;
 var savedItemsID = 0;
 var currentQuarter = null;
 var isGameOver = null;
+var IsOvertime = null;
 
 var homeData = {
     team: null,
@@ -109,6 +110,7 @@ var setTeamData = function() {
     homeData.q2 = homeTeamParsed.ScoreQuarter2;
     homeData.q3 = homeTeamParsed.ScoreQuarter3;
     homeData.q4 = homeTeamParsed.ScoreQuarter4;
+    homeData.overtime = homeTeamParsed.ScoreOvertime;
 
     awayData.team = awayTeamParsed.TeamName;
     awayData.threevarter = awayTeamParsed.Team
@@ -116,6 +118,7 @@ var setTeamData = function() {
     awayData.q2 = awayTeamParsed.ScoreQuarter2;
     awayData.q3 = awayTeamParsed.ScoreQuarter3;
     awayData.q4 = awayTeamParsed.ScoreQuarter4;
+    awayData.overtime = awayTeamParsed.ScoreOvertime;
 
     // Calls the SportsDataIO API to get the live current quarter
     currentQuarter = getQuarter('CIN');
@@ -276,6 +279,7 @@ var getQuarter = function(selectedTeam) {
                 response.json().then(function(data) {
                     currentQuarter = data.Quarters.length;
                     isGameOver = data.Score.IsOver;
+                    IsOvertime = data.Score.IsOvertime;
 
                 })
             }
@@ -289,14 +293,16 @@ var didIWin = function() {
     var homeSecondQuarter = (homeData.q1 + homeData.q2) % 10;
     var homeThirdQuarter = (homeData.q1 + homeData.q2 + homeData.q3) % 10;
     var homeFourthQuarter = (homeData.q1 + homeData.q2 + homeData.q3 + homeData.q4) % 10;
+    var homeovertime = (homeData.q1 + homeData.q2 + homeData.q3 + homeData.q4 + homeData.overtime) % 10;
 
     var awayFirstQuarter = awayData.q1 % 10;
     var awaySecondQuarter = (awayData.q1 + awayData.q2) % 10;
     var awayThirdQuarter = (awayData.q1 + awayData.q2 + awayData.q3) % 10;
     var awayFourthQuarter = (awayData.q1 + awayData.q2 + awayData.q3 + awayData.q4) % 10;
+    var awayOvertime = (awayData.q1 + awayData.q2 + awayData.q3 + awayData.q4 + awayData.overtime) % 10;
 
-    console.log(homeFirstQuarter, homeSecondQuarter, homeThirdQuarter, homeFourthQuarter)
-    console.log(awayFirstQuarter, awaySecondQuarter, awayThirdQuarter, awayFourthQuarter)
+    console.log(homeFirstQuarter, homeSecondQuarter, homeThirdQuarter, homeFourthQuarter, homeovertime)
+    console.log(awayFirstQuarter, awaySecondQuarter, awayThirdQuarter, awayFourthQuarter, awayOvertime)
 
     for (var i = 0, row; row = watchListEL.rows[i]; i++) {
         for (var j = 0, col; col = row.cells[j]; j++) {
@@ -322,9 +328,16 @@ var didIWin = function() {
                 col.setAttribute("style", "background-color:lightgreen")
                 launchGif();
             }
-            if (j == 4 && homeNum == homeFourthQuarter && awayNum == awayFourthQuarter && isGameOver) {
-                col.setAttribute("style", "background-color:lightgreen")
-                launchGif();
+            if (!IsOvertime) {
+                if (j == 4 && homeNum == homeFourthQuarter && awayNum == awayFourthQuarter && isGameOver) {
+                    col.setAttribute("style", "background-color:lightgreen")
+                    launchGif();
+                }
+            } else {
+                if (j == 4 && homeNum == homeovertime && awayNum == awayOvertime && isGameOver) {
+                    col.setAttribute("style", "background-color:lightgreen")
+                    launchGif();
+                }
             }
         }
     }
