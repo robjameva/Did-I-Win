@@ -105,9 +105,9 @@ var setTeamData = function() {
     var awayTeamParsed = JSON.parse(localStorage.getItem("AWAY"));
 
 
-    if (!homeTeamParsed) return currentQuarter = 0;
+    // if (!homeTeamParsed) return currentQuarter = 0;
 
-    if (homeTeamParsed.Team != 'CIN') return currentQuarter = 0;
+    // if (homeTeamParsed.Team != 'CIN') return currentQuarter = 0;
 
 
     homeData.team = homeTeamParsed.TeamName;
