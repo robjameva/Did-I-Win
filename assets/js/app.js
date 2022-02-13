@@ -37,8 +37,8 @@ var isGameOver = null;
 var IsOvertime = null;
 
 var homeData = {
-    team: null,
-    threevarter: null,
+    team: 'Bengals',
+    threevarter: 'CIN',
     q1: null,
     q2: null,
     q3: null,
@@ -47,8 +47,8 @@ var homeData = {
 }
 
 var awayData = {
-    team: null,
-    threevarter: null,
+    team: 'Rams',
+    threevarter: 'LAR',
     q1: null,
     q2: null,
     q3: null,
@@ -60,7 +60,7 @@ var awayData = {
 var getTeamData = function(team) {
     var key = "3e0e0d8d140747b997880c8e9c121ac8";
     var season = "2021POST";
-    var apiUrl = `https://api.sportsdata.io/v3/nfl/scores/json/TeamGameStats/${season}/3?key=${key}`
+    var apiUrl = `https://api.sportsdata.io/v3/nfl/scores/json/TeamGameStats/${season}/4?key=${key}`
 
     // In this API call we get the data for every game for the week that is specified in the URL
     // Each game data object is saved to session storage
@@ -104,6 +104,9 @@ var setTeamData = function() {
     var homeTeamParsed = JSON.parse(localStorage.getItem("HOME"));
     var awayTeamParsed = JSON.parse(localStorage.getItem("AWAY"));
 
+    if (!homeTeamParsed) return currentQuarter = 0;
+
+
     homeData.team = homeTeamParsed.TeamName;
     homeData.threevarter = homeTeamParsed.Team;
     homeData.q1 = homeTeamParsed.ScoreQuarter1;
@@ -119,10 +122,6 @@ var setTeamData = function() {
     awayData.q3 = awayTeamParsed.ScoreQuarter3;
     awayData.q4 = awayTeamParsed.ScoreQuarter4;
     awayData.overtime = awayTeamParsed.ScoreOvertime;
-
-    // Calls the SportsDataIO API to get the live current quarter
-    currentQuarter = getQuarter('CIN');
-
 }
 
 // Dynamically creates score buttons for the dropdown to include the team name
@@ -156,15 +155,14 @@ var checkDropdownChildren = function() {
 // Function to call createScoreBtns for both the home and away teams
 var renderScoreBtns = function() {
     for (var i = 0; i < 10; i++) {
-        createScoreBtns(i, "home", homeData.team);
-        createScoreBtns(i, "away", awayData.team);
+        createScoreBtns(i, "home", 'Bengals');
+        createScoreBtns(i, "away", 'Rams');
     }
 }
 
 var addToPoolWatchlist = function() {
     var homeScore = homeScoreTitleEL.getAttribute("data-home-score-")
     var awayScore = awayScoreTitleEL.getAttribute("data-away-score-")
-    console.log(homeScore, awayScore);
 
     var tableRowEl = document.createElement("tr");
     var tableDataTeamsEl = document.createElement("td");
@@ -259,7 +257,6 @@ if (localStorage.getItem(0)) {
     for (var i = 0; i < localStorage.length; i++) {
         if (localStorage.getItem(i) != null) {
             SavedData = JSON.parse(localStorage.getItem(i))
-            console.log(SavedData)
             loadPoolWatchlist(SavedData)
             savedItemsID++
         }
@@ -271,7 +268,7 @@ if (localStorage.getItem(0)) {
 var getQuarter = function(selectedTeam) {
     var key = "3e0e0d8d140747b997880c8e9c121ac8"
     var season = "2021POST";
-    var apiUrl = `https://api.sportsdata.io/v3/nfl/pbp/json/PlayByPlay/${season}/3/${selectedTeam}?key=${key}`
+    var apiUrl = `https://api.sportsdata.io/v3/nfl/pbp/json/PlayByPlay/${season}/4/${selectedTeam}?key=${key}`
 
     fetch(apiUrl)
         .then(function(response) {
@@ -289,6 +286,7 @@ var getQuarter = function(selectedTeam) {
 // Logic to check if the users numbers match the winning numbers
 var didIWin = function() {
     // Get total score per quarter and only look at the last didgit
+    setTeamData();
     var homeFirstQuarter = homeData.q1 % 10;
     var homeSecondQuarter = (homeData.q1 + homeData.q2) % 10;
     var homeThirdQuarter = (homeData.q1 + homeData.q2 + homeData.q3) % 10;
@@ -408,7 +406,6 @@ homeScoreDropDownEl.addEventListener("click", function(event) {
     var value = btn.getAttribute("data-home-score-")
     homeScoreTitleEL.setAttribute("data-home-score-", value)
     homeScoreTitleEL.textContent = btn.textContent;
-    console.log(btn)
 })
 
 awayScoreDropDownEl.addEventListener("click", function(event) {
@@ -416,7 +413,6 @@ awayScoreDropDownEl.addEventListener("click", function(event) {
     var value = btn.getAttribute("data-away-score-")
     awayScoreTitleEL.setAttribute("data-away-score-", value)
     awayScoreTitleEL.textContent = btn.textContent;
-    console.log(btn)
 })
 
 addToPoolBtnEL.addEventListener("click", addToPoolWatchlist)
@@ -425,3 +421,5 @@ clearListBtnEL.addEventListener("click", clearPool)
 
 checkBoxesBtnEL.addEventListener("click", didIWin)
 
+// Calls the SportsDataIO API to get the live current quarter
+currentQuarter = getQuarter(team);
