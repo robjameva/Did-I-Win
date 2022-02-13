@@ -92,9 +92,9 @@ var setLocalStorage = function() {
     var gameKey = localStorage.getItem("GameKey");
     for (var i = 0; i < sessionStorage.length - 1; i++) {
         var data = JSON.parse(sessionStorage.getItem("ID" + i));
-        if (data.GameKey == gameKey) {
-            localStorage.setItem(data.HomeOrAway, JSON.stringify(data));
-        }
+        // if (data.GameKey == gameKey) {
+        localStorage.setItem(data.HomeOrAway, JSON.stringify(data));
+        // }
 
     }
 }
