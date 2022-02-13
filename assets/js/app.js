@@ -60,7 +60,7 @@ var awayData = {
 var getTeamData = function(team) {
     var key = "3e0e0d8d140747b997880c8e9c121ac8";
     var season = "2021POST";
-    var apiUrl = `https://api.sportsdata.io/v3/nfl/scores/json/TeamGameStats/${season}/4?key=${key}`
+    var apiUrl = `https://api.sportsdata.io/v3/nfl/scores/json/TeamGameStats/${season}/3?key=${key}`
 
     // In this API call we get the data for every game for the week that is specified in the URL
     // Each game data object is saved to session storage
@@ -103,6 +103,9 @@ var setLocalStorage = function() {
 var setTeamData = function() {
     var homeTeamParsed = JSON.parse(localStorage.getItem("HOME"));
     var awayTeamParsed = JSON.parse(localStorage.getItem("AWAY"));
+
+
+    if (!homeTeamParsed) return currentQuarter = 0;
 
     if (homeTeamParsed.Team != 'CIN') return currentQuarter = 0;
 
@@ -268,7 +271,7 @@ if (localStorage.getItem(0)) {
 var getQuarter = function(selectedTeam) {
     var key = "3e0e0d8d140747b997880c8e9c121ac8"
     var season = "2021POST";
-    var apiUrl = `https://api.sportsdata.io/v3/nfl/pbp/json/PlayByPlay/${season}/4/${selectedTeam}?key=${key}`
+    var apiUrl = `https://api.sportsdata.io/v3/nfl/pbp/json/PlayByPlay/${season}/3/${selectedTeam}?key=${key}`
 
     fetch(apiUrl)
         .then(function(response) {
