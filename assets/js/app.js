@@ -89,14 +89,22 @@ var getTeamData = function(team) {
 
 // Sets local storage to save only the game objects for the selected team and their opponent by looking for the Game Key saved in the inital API call
 var setLocalStorage = function() {
-    var gameKey = localStorage.getItem("GameKey");
-    for (var i = 0; i < sessionStorage.length - 1; i++) {
-        var data = JSON.parse(sessionStorage.getItem("ID" + i));
-        // if (data.GameKey == gameKey) {
-        localStorage.setItem(data.HomeOrAway, JSON.stringify(data));
-        // }
+    var gameKey = 202130407;
+    // localStorage.getItem("GameKey");
+    var HOME = JSON.parse(sessionStorage.getItem("ID0"));
+    localStorage.setItem("HOME", JSON.stringify(HOME));
 
-    }
+    var AWAY = JSON.parse(sessionStorage.getItem("ID1"));
+    localStorage.setItem("AWAY", JSON.stringify(AWAY));
+
+
+    // for (var i = 0; i < sessionStorage.length - 1; i++) {
+    //     var HOME = JSON.parse(sessionStorage.getItem("ID" + i));
+    //     // if (data.GameKey == gameKey) {
+    //     localStorage.setItem(HOME.HomeOrAway, JSON.stringify(HOME));
+    //     // }
+
+    // }
 }
 
 // Sets the global obejcts for home and away teams with the relevent data from local storage
