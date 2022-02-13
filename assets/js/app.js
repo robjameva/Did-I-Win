@@ -289,7 +289,6 @@ var getQuarter = function(selectedTeam) {
 // Logic to check if the users numbers match the winning numbers
 var didIWin = function() {
     // Get total score per quarter and only look at the last didgit
-    setTeamData();
     var homeFirstQuarter = homeData.q1 % 10;
     var homeSecondQuarter = (homeData.q1 + homeData.q2) % 10;
     var homeThirdQuarter = (homeData.q1 + homeData.q2 + homeData.q3) % 10;
